@@ -18,6 +18,7 @@ public class MainClass extends ApplicationAdapter {
 
 	@Override
 	public void render () {
+		update();
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
@@ -25,6 +26,11 @@ public class MainClass extends ApplicationAdapter {
 		batch.end();
 	}
 	
+	private void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	@Override
 	public void dispose () {
 		batch.dispose();
