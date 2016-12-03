@@ -20,39 +20,17 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class MainClass extends ApplicationAdapter {
-	SpriteBatch batch;
-	private World myWorld;
-	Car panSamochodzik;
-	private Body body;
-	
-	Box2DDebugRenderer debugRenderer;
-    Matrix4 debugMatrix;
-    OrthographicCamera camera;
-    float torque = 0.0f;
-    boolean drawSprite = true;
+    SpriteBatch batch;
+    Car car;
+    World world;
+    Body body;
 
 	@Override
 	public void create() {
+		world = new World(new Vector2(0, 0), true);
 		batch = new SpriteBatch();
+		car = new Car(world);
 		
-		myWorld = new World(new Vector2(0f, -5f), true);
-		// Now create a BodyDefinition.  This defines the physics objects type and position in the simulation
-        
-		panSamochodzik = new Car();
-        // Create a body in the world using our definition
-        panSamochodzik.setBody(myWorld.createBody(panSamochodzik.getBodyDef()));
-       // Fixture fixture = body.createFixture(panSamochodzik.getFixtureDef());
-
-        // FixtureDef is a confusing expression for physical properties
-        // Basically this is where you, in addition to defining the shape of the body
-        // you also define it's properties like density, restitution and others we will see shortly
-        // If you are wondering, density and area are used to calculate over all mass
-                
-        // Shape is the only disposable of the lot, so get rid of it
-     
-        debugRenderer = new Box2DDebugRenderer();
-        camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.
-                 getHeight());
 		
 	}
 
@@ -63,25 +41,21 @@ public class MainClass extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		batch.begin();
-		batch.draw(panSamochodzik.getPlayerSprite(), panSamochodzik.getPlayerSprite().getX(),panSamochodzik.getPlayerSprite().getY());
-		
+		car.getSprite().draw(batch);
 
 		batch.end();
 	}
 
 	private void update() {
-		camera.update();
-		myWorld.step(1f/60f, 3, 6);
-		body.applyTorque(torque,true);
-		panSamochodzik.getPlayerSprite().setPosition(body.getPosition().x, body.getPosition().y);
-		if(Gdx.input.isKeyPressed(Keys.UP)){
-			body.getPosition().add(2, 1);
-		}
+		world.step(Gdx.graphics.getDeltaTime(), 6, 2);
+		car.getSprite().setPosition(car.body.getPosition().x, car.body.getPosition().y);
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
+		car.dispose();
+		world.dispose();
 		//panSamochodzik.img.dispose();
 		//shape.dispose();
 	}
