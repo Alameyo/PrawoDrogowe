@@ -35,7 +35,7 @@ public class Car {
 	private Fixture fixture;
 
 	public Car(World world) {
-		img = new Texture("car.jpg");
+		img = new Texture("autko1.png");
 		sprite = new Sprite(img);
 		
 		
@@ -49,14 +49,16 @@ public class Car {
 		velX = 0;
 		velY = 0;
 		topSpeed = 150f;
+		angle = 90;
+		
 		// body
 		bodyDef = new BodyDef();
 		bodyDef.type = BodyDef.BodyType.DynamicBody;
 		bodyDef.position.set(sprite.getX(), sprite.getY());
 		this.body = world.createBody(bodyDef);
 
-		angle = 90;//MathUtils.radiansToDegrees * body.getAngle();
-		// fixture
+	
+		
 		shape = new PolygonShape();
 		shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		fixtureDef = new FixtureDef();
@@ -77,9 +79,7 @@ public class Car {
 		y = y+velY;
 		body.setTransform(x, y, angle);
 		checkForCollision();
-		//body.setLinearVelocity(velX, velY);
-		System.out.println(body.getAngle() + "||||" + angle);
-		//body.setAngularVelocity(angle);
+		
 		sprite.setPosition(body.getPosition().x, body.getPosition().y);
 		sprite.setRotation(angle);
 	}

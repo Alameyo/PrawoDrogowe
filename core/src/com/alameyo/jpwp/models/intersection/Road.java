@@ -1,5 +1,6 @@
 package com.alameyo.jpwp.models.intersection;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -19,27 +20,43 @@ public class Road {
 	boolean taken;
 	
 	
-	public Road(World world){
-		// Create our body definition
-		BodyDef groundBodyDef = new BodyDef();  
-		// Set its world position
-		groundBodyDef.position.set(new Vector2(0, 10));  
+	public float x;
+	public float y;
+	
+	BodyDef bodyDef;
+	Body body;
+	
+	public Road(World world, float x, float y, boolean axisX, boolean axisY){
+		img = new Texture("blokDrogi.png");
+		
+		sprite = new Sprite(img);
+		sprite.flip(axisX, axisY);
+		
+		this.x=x;
+		this.y=y;
+		sprite.setPosition(x, y);
+		
+		bodyDef = new BodyDef();  
+		bodyDef.type = BodyDef.BodyType.StaticBody; 
+		bodyDef.position.set(sprite.getX(), sprite.getY());
 
-		// Create a body from the defintion and add it to the world
-		Body groundBody = world.createBody(groundBodyDef);  
+		this.body = world.createBody(bodyDef);  
 
 		// Create a polygon shape
-		PolygonShape groundBox = new PolygonShape();  
-		// Set the polygon shape as a box which is twice the size of our view port and 20 high
-		// (setAsBox takes half-width and half-height as arguments)
-		groundBox.setAsBox(1024.0f, 10.0f);
-		// Create a fixture from our polygon shape and add it to our ground body  
-		groundBody.createFixture(groundBox, 0.0f); 
+		PolygonShape shape = new PolygonShape();  
+		shape.setAsBox(sprite.getWidth()/2, sprite.getHeight()/2);  
+		body.createFixture(shape, 0.0f); 
 		// Clean up after ourselves
-		groundBox.dispose();
+		shape.dispose();
+		
 	}
 	
 	
+	public Sprite getSprite() {
+		return sprite;
+	}
+
+
 	public void isTaken(){
 		
 	}
