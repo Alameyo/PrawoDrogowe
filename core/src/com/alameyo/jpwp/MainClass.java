@@ -8,6 +8,7 @@ import com.alameyo.jpwp.models.intersection.Road;
 import com.alameyo.jpwp.models.vehicles.Car;
 import com.alameyo.jpwp.models.vehicles.PlayerCar;
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,7 +18,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class MainClass extends ApplicationAdapter {
+public class MainClass extends Game {
     SpriteBatch batch;
     Car car;
     Road road;
