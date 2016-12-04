@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Car {
+public abstract class Car {
 	public Body body;
 	protected Sprite sprite;
 	protected Texture img;
@@ -83,9 +83,8 @@ public class Car {
 		sprite.setPosition(body.getPosition().x, body.getPosition().y);
 		sprite.setRotation(angle);
 	}
-	protected void controlls(){
-		
-	}
+	abstract protected void controlls();
+	
 	protected void checkForCollision(){
 		
 	}

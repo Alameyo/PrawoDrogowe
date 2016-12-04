@@ -9,7 +9,6 @@ public class PlayerCar extends Car  {
 	
 public PlayerCar(World world) {
 		super(world);
-		// TODO Auto-generated constructor stub
 	}
 @Override
 protected void controlls(){
@@ -38,5 +37,8 @@ protected void controlls(){
 		//body.setAngularVelocity(-1.2f);
 		 angle = angle - 1.2f;
 	} 
+}
+private void turning(){
+	
 }
 }
