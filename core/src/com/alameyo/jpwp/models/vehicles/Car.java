@@ -16,8 +16,8 @@ public class Car {
 	public Body body;
 	protected Sprite sprite;
 	protected Texture img;
-	protected float x;
-	protected float y;
+	public float x;
+	public float y;
 	protected float speed;
 	protected float topSpeed;
 	protected float acceleration;
@@ -25,6 +25,8 @@ public class Car {
 	protected float angle;
 	protected float velX;
 	protected float velY;
+	protected float height;
+	protected float width;
 	
 
 	private PolygonShape shape;
@@ -35,6 +37,8 @@ public class Car {
 	public Car(World world) {
 		img = new Texture("car.jpg");
 		sprite = new Sprite(img);
+		
+		
 		x = Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2;
 		y = Gdx.graphics.getHeight() / 2 - sprite.getHeight() / 2;
 		sprite.setPosition(x, y);
@@ -72,6 +76,7 @@ public class Car {
 		x = x+velX;
 		y = y+velY;
 		body.setTransform(x, y, angle);
+		checkForCollision();
 		//body.setLinearVelocity(velX, velY);
 		System.out.println(body.getAngle() + "||||" + angle);
 		//body.setAngularVelocity(angle);
@@ -79,6 +84,9 @@ public class Car {
 		sprite.setRotation(angle);
 	}
 	protected void controlls(){
+		
+	}
+	protected void checkForCollision(){
 		
 	}
 	public void dispose() {
