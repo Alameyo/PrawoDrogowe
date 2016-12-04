@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
@@ -13,48 +14,77 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Car {
 	public Body body;
-	Sprite sprite;
-	Texture img;
-	float x;
-	float y;
+	protected Sprite sprite;
+	protected Texture img;
+	protected float x;
+	protected float y;
+	protected float speed;
+	protected float topSpeed;
+	protected float acceleration;
+	protected float deacceleration;
+	protected float angle;
+	protected float velX;
+	protected float velY;
 	
-	
-	PolygonShape shape;
-	BodyDef bodyDef;
-	FixtureDef fixtureDef;
-	Fixture fixture;
-	
+
+	private PolygonShape shape;
+	private BodyDef bodyDef;
+	private FixtureDef fixtureDef;
+	private Fixture fixture;
+
 	public Car(World world) {
-		img = new Texture("badlogic.jpg");
+		img = new Texture("car.jpg");
 		sprite = new Sprite(img);
 		x = Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2;
 		y = Gdx.graphics.getHeight() / 2 - sprite.getHeight() / 2;
 		sprite.setPosition(x, y);
+
+		speed = 0;
+		acceleration = 30;
+		deacceleration =18;
+		velX = 0;
+		velY = 0;
+		topSpeed = 150f;
+		// body
 		bodyDef = new BodyDef();
-	    bodyDef.type = BodyDef.BodyType.DynamicBody;
-	    bodyDef.position.set(sprite.getX(), sprite.getY());
-	    this.body = world.createBody(bodyDef);
-	    shape = new PolygonShape();
-	    shape.setAsBox(sprite.getWidth()/2, sprite.getHeight()/2);
-	    fixtureDef = new FixtureDef();
-        fixtureDef.shape = shape;
-        fixtureDef.density = 1f;
+		bodyDef.type = BodyDef.BodyType.DynamicBody;
+		bodyDef.position.set(sprite.getX(), sprite.getY());
+		this.body = world.createBody(bodyDef);
 
-        fixture = body.createFixture(fixtureDef);
+		angle = 90;//MathUtils.radiansToDegrees * body.getAngle();
+		// fixture
+		shape = new PolygonShape();
+		shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
+		fixtureDef = new FixtureDef();
+		fixtureDef.shape = shape;
+		fixtureDef.density = 1f;
 
-        // Shape is the only disposable of the lot, so get rid of it
-        shape.dispose();
+		fixture = body.createFixture(fixtureDef);
+
+		shape.dispose();
 	}
-	public void carUpdate(){
-		if(Gdx.input.isButtonPressed(Keys.UP)){
-			 body.setLinearVelocity(0f, 100f);
-		}
+
+	public void carUpdate() {
+		controlls();
+		velX = MathUtils.cos(MathUtils.degreesToRadians * angle) * speed * Gdx.graphics.getDeltaTime(); // X-component.
+		velY = MathUtils.sin(MathUtils.degreesToRadians * angle) * speed * Gdx.graphics.getDeltaTime(); // Y-component.
+		//angle = body.getAngle();
+		x = x+velX;
+		y = y+velY;
+		body.setTransform(x, y, angle);
+		//body.setLinearVelocity(velX, velY);
+		System.out.println(body.getAngle() + "||||" + angle);
+		//body.setAngularVelocity(angle);
+		sprite.setPosition(body.getPosition().x, body.getPosition().y);
+		sprite.setRotation(angle);
 	}
-	
-	public void dispose(){
+	protected void controlls(){
+		
+	}
+	public void dispose() {
 		img.dispose();
 	}
-	
+
 	public Sprite getSprite() {
 		return sprite;
 	}
@@ -70,5 +100,5 @@ public class Car {
 	public void setImg(Texture img) {
 		this.img = img;
 	}
-	
+
 }
