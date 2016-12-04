@@ -31,10 +31,7 @@ protected void controlls(){
 	}
 	if (Gdx.input.isKeyPressed(Keys.A)) {
 		 angle = angle + 1.2f;
-		//body.setAngularVelocity(1.2f);
-
 	} else if (Gdx.input.isKeyPressed(Keys.D)) {
-		//body.setAngularVelocity(-1.2f);
 		 angle = angle - 1.2f;
 	} 
 }

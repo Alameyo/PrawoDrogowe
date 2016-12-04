@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="com.alameyo.jpwp.models.vehicles.Car" x="117" y="93">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="com.alameyo.jpwp.screens.GameScreen" x="479" y="301">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="com.alameyo.jpwp.MainClass"
+            endpointName="game" kind="Simple"/>
+        <Association
+            destinationClassName="com.alameyo.jpwp.models.vehicles.Car"
+            endpointName="car" kind="Simple"/>
+        <Association
+            destinationClassName="com.alameyo.jpwp.models.intersection.Road"
+            endpointName="road" kind="Simple"/>
+        <Association
+            destinationClassName="com.alameyo.jpwp.models.intersection.Intersection"
+            endpointName="intersection" kind="Simple"/>
+        <Association
+            destinationClassName="com.alameyo.jpwp.models.intersection.Road"
+            endpointName="roadList" kind="Simple"/>
+        <Communication destinationClassName="com.alameyo.jpwp.models.vehicles.Car"/>
+        <Communication destinationClassName="com.alameyo.jpwp.MainClass"/>
+    </Class>
+    <Class name="com.alameyo.jpwp.models.intersection.Road" x="405" y="124">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="com.alameyo.jpwp.screens.MenuScreen" x="262" y="330">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association destinationClassName="com.alameyo.jpwp.MainClass"
+            endpointName="game" kind="Simple"/>
+    </Class>
+    <Class name="com.alameyo.jpwp.MainClass" x="272" y="174">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class
+        name="com.alameyo.jpwp.models.intersection.CollisionListeners"
+        x="552" y="20">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="com.alameyo.jpwp.models.intersection.Intersection"
+        x="657" y="141">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.alameyo.jpwp.models.intersection.Road"
+            endpointName="roadLeft" kind="Simple"/>
+        <Association
+            destinationClassName="com.alameyo.jpwp.models.intersection.Road"
+            endpointName="roadDown" kind="Simple"/>
+        <Association
+            destinationClassName="com.alameyo.jpwp.models.intersection.Road"
+            endpointName="roadUp" kind="Simple"/>
+        <Association
+            destinationClassName="com.alameyo.jpwp.models.intersection.Road"
+            endpointName="roadRight" kind="Simple"/>
+    </Class>
+    <Class name="com.alameyo.jpwp.models.vehicles.AutonomusCar" x="110" y="35">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="com.alameyo.jpwp.models.vehicles.Car"/>
+    </Class>
+    <Class name="com.alameyo.jpwp.models.vehicles.PlayerCar" x="17" y="45">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="com.alameyo.jpwp.models.vehicles.Car"/>
+    </Class>
+</ClassDiagram>
