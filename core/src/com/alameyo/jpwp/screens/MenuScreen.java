@@ -30,10 +30,9 @@ public class MenuScreen implements Screen
 
 		private void create(){		
 			stage = new Stage();
-			Gdx.input.setInputProcessor(stage);
-		System.out.println("fsa");	
+			Gdx.input.setInputProcessor(stage);	
 			skin = new Skin();
-			Pixmap pixmap = new Pixmap(100, 100, Format.RGBA8888);
+			Pixmap pixmap = new Pixmap(500, 500, Format.RGBA8888);
 			pixmap.setColor(Color.BLUE);
 			pixmap.fill();
 
@@ -52,24 +51,19 @@ public class MenuScreen implements Screen
 
 			skin.add("default", textButtonStyle);
 
-			final TextButton textButton1=new TextButton("Rocket flight",textButtonStyle);
-			final TextButton textButton2=new TextButton("EVA",textButtonStyle);
-			final TextButton textButton3=new TextButton("Moon Landing",textButtonStyle);
+			final TextButton textButton1=new TextButton("ZAGRAJ",textButtonStyle);
 			
-			textButton1.setPosition(100, 200);
-			textButton2.setPosition(200, 200);
-			textButton3.setPosition(300, 200);
+			float x = Gdx.graphics.getWidth() / 4;
+			float y = Gdx.graphics.getHeight() / 5;
+			textButton1.setPosition(x, y);
 		
 			stage.addActor(textButton1);
-			stage.addActor(textButton2);
-			stage.addActor(textButton3);
 					
 			textButton1.addListener(new ChangeListener() {
 				public void changed (ChangeEvent event, Actor actor) {
 					System.out.println("Clicked! Is checked: " + textButton1.isChecked());
 					textButton1.setText("Starting new game");
-				//	game.setScreen( new GameScreen(game));
-
+					game.setScreen( new GameScreen(game));
 				}
 			});	
 	}
@@ -83,8 +77,7 @@ public class MenuScreen implements Screen
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act();
-		stage.draw();
-		//stage.setDebugAll(true);		
+		stage.draw();		
 	}
 
 	@Override

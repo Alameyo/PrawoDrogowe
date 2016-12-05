@@ -12,12 +12,12 @@ public class MainClass extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		System.out.println("rwrw");
-		this.setScreen(new GameScreen(this));
+		this.setScreen(new MenuScreen(this));
 	}
 
 	@Override
 	public void render() {
-
+		super.render();
 	}
 
 

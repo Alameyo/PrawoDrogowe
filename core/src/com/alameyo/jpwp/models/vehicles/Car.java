@@ -44,11 +44,11 @@ public abstract class Car {
 		sprite.setPosition(x, y);
 
 		speed = 0;
-		acceleration = 30;
-		deacceleration =18;
+		acceleration = 50;
+		deacceleration =28;
 		velX = 0;
 		velY = 0;
-		topSpeed = 150f;
+		topSpeed = 250f;
 		angle = 90;
 		
 		// body

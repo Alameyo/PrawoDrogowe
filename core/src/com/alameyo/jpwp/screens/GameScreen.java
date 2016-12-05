@@ -51,6 +51,12 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 700, 0, false, true));
 		roadList.add(new Road(world, 900, 0, false, true));
 		roadList.add(new Road(world, 1100, 0, false, true));
+		roadList.add(new Road(world, 1300, 100, true, false));
+		roadList.add(new Road(world, 1300, 200, true, false));
+		roadList.add(new Road(world, 1300, 300, true, false));
+		roadList.add(new Road(world, 1300, 400, true, false));
+		roadList.add(new Road(world, 1300, 500, true, false));
+		roadList.add(new Road(world, 1300, 600, true, false));
 		intersection = new Intersection(world,1300,0);
 		
 
