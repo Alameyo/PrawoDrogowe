@@ -23,6 +23,7 @@ public abstract class Car {
 	protected float acceleration;
 	protected float deacceleration;
 	protected float angle;
+	protected float angleChange;
 	protected float velX;
 	protected float velY;
 	protected float height;
@@ -44,11 +45,12 @@ public abstract class Car {
 		sprite.setPosition(x, y);
 
 		speed = 0;
-		acceleration = 50;
-		deacceleration =28;
+		acceleration = 80;
+		deacceleration =60;
+		angleChange = 2.2f;
 		velX = 0;
 		velY = 0;
-		topSpeed = 250f;
+		topSpeed = 450f;
 		angle = 90;
 		
 		// body
@@ -66,7 +68,7 @@ public abstract class Car {
 		fixtureDef.density = 1f;
 
 		fixture = body.createFixture(fixtureDef);
-
+		body.setUserData(this);
 		shape.dispose();
 	}
 

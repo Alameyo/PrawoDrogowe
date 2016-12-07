@@ -22,15 +22,23 @@ public class Road {
 	
 	public float x;
 	public float y;
+	private float angle;
 	
 	BodyDef bodyDef;
 	Body body;
 	
-	public Road(World world, float x, float y, boolean axisX, boolean axisY){
+	public Road(World world, float x, float y, boolean axisX, boolean axisY, boolean rotate){
 		img = new Texture("blokDrogi.png");
 		
 		sprite = new Sprite(img);
 		sprite.flip(axisX, axisY);
+		if(rotate == true){
+			angle = 90;
+		}else{
+			angle =0;
+		}
+		
+		sprite.rotate(angle);
 		
 		this.x=x;
 		this.y=y;

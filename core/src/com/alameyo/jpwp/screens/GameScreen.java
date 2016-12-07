@@ -29,6 +29,7 @@ public class GameScreen implements Screen {
     Texture img;
     OrthographicCamera cam;
     ArrayList<Road> roadList;
+    ArrayList<Intersection> interSectionList;
 
 	public GameScreen(MainClass game){
 		this.game=game;
@@ -39,27 +40,53 @@ public class GameScreen implements Screen {
 		batch = new SpriteBatch();
 		car = new PlayerCar(world);
 		roadList = new ArrayList<Road>();
-		roadList.add(new Road(world, 100, 100, false, false));
-		roadList.add(new Road(world, 300, 100, false, false));
-		roadList.add(new Road(world, 500, 100, false, false));
-		roadList.add(new Road(world, 700, 100, false, false));
-		roadList.add(new Road(world, 900, 100, false, false));
-		roadList.add(new Road(world, 1100, 100, false, false));
-		roadList.add(new Road(world, 100, 0, false, true));
-		roadList.add(new Road(world, 300, 0, false, true));
-		roadList.add(new Road(world, 500, 0, false, true));
-		roadList.add(new Road(world, 700, 0, false, true));
-		roadList.add(new Road(world, 900, 0, false, true));
-		roadList.add(new Road(world, 1100, 0, false, true));
-		roadList.add(new Road(world, 1300, 100, true, false));
-		roadList.add(new Road(world, 1300, 200, true, false));
-		roadList.add(new Road(world, 1300, 300, true, false));
-		roadList.add(new Road(world, 1300, 400, true, false));
-		roadList.add(new Road(world, 1300, 500, true, false));
-		roadList.add(new Road(world, 1300, 600, true, false));
-		intersection = new Intersection(world,1300,0);
+		interSectionList = new ArrayList<Intersection>();
+		roadList.add(new Road(world, 100, 100, false, false, false));
+		roadList.add(new Road(world, 300, 100, false, false, false));
+		roadList.add(new Road(world, 500, 100, false, false, false));
+		roadList.add(new Road(world, 700, 100, false, false, false));
+		roadList.add(new Road(world, 900, 100, false, false, false));
+		roadList.add(new Road(world, 1100, 100, false, false, false));
 		
+		roadList.add(new Road(world, 100, 0, false, true, false));
+		roadList.add(new Road(world, 300, 0, false, true, false));
+		roadList.add(new Road(world, 500, 0, false, true, false));
+		roadList.add(new Road(world, 700, 0, false, true, false));
+		roadList.add(new Road(world, 900, 0, false, true, false));
+		roadList.add(new Road(world, 1100, 0, false, true, false));
+		
+		interSectionList.add(new Intersection(world,1300,0));
+		
+		roadList.add(new Road(world, 1250, 200, false, false, true));
+		roadList.add(new Road(world, 1250, 400, false, false, true));
+		roadList.add(new Road(world, 1250, 600, false, false, true));
+		roadList.add(new Road(world, 1250, 800, false, false, true));
+		roadList.add(new Road(world, 1250, 1000, false, false, true));
+		roadList.add(new Road(world, 1250, 1200, false, false, true));
+		
+		roadList.add(new Road(world, 1350, 200, false, true, true));
+		roadList.add(new Road(world, 1350, 400, false, true, true));
+		roadList.add(new Road(world, 1350, 600, false, true, true));
+		roadList.add(new Road(world, 1350, 800, false, true, true));
+		roadList.add(new Road(world, 1350, 1000, false, true, true));
+		roadList.add(new Road(world, 1350, 1200, false, true, true));
+		
+		interSectionList.add(new Intersection(world, 1300, 1300));
+		
+		roadList.add(new Road(world, 1250, -150, false, false, true));
+		roadList.add(new Road(world, 1250, -350, false, false, true));
+		roadList.add(new Road(world, 1250, -550, false, false, true));
+		roadList.add(new Road(world, 1250, -750, false, false, true));
+		roadList.add(new Road(world, 1250, -950, false, false, true));
+		roadList.add(new Road(world, 1250, -1150, false, false, true));
 
+		roadList.add(new Road(world, 1350, -150, false, true, true));
+		roadList.add(new Road(world, 1350, -350, false, true, true));
+		roadList.add(new Road(world, 1350, -550, false, true, true));
+		roadList.add(new Road(world, 1350, -750, false, true, true));
+		roadList.add(new Road(world, 1350, -950, false, true, true));
+		roadList.add(new Road(world, 1350, -1150, false, true, true));
+		
 		
 	}
 	private void update() {
@@ -118,7 +145,9 @@ public class GameScreen implements Screen {
 		for (Road road : roadList) {
 			road.getSprite().draw(batch);
 		}
-		intersection.getSprite().draw(batch);
+		for (Intersection intersection : interSectionList) {
+			intersection.getSprite().draw(batch);
+		}
 		//road.getSprite().draw(batch);
 		car.getSprite().draw(batch);
 		//batch.draw(img, 50,50);

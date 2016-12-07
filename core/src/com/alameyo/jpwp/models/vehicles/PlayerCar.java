@@ -5,37 +5,48 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class PlayerCar extends Car  {
-	
-public PlayerCar(World world) {
+public class PlayerCar extends Car {
+
+	public PlayerCar(World world) {
 		super(world);
 	}
-@Override
-protected void controlls(){
-	if (Gdx.input.isKeyPressed(Keys.W)) {
-		if (speed < topSpeed) {
-			speed += acceleration*Gdx.graphics.getDeltaTime();
-			System.out.println("Faster" +speed);
+
+	@Override
+	protected void controlls() {
+		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
+			if (speed < topSpeed) {
+				speed += acceleration * Gdx.graphics.getDeltaTime();
+				System.out.println("Faster" + speed);
+			}
+		} else if (Gdx.input.isKeyPressed(Keys.S) ||Gdx.input.isKeyPressed(Keys.DOWN)) {
+			if (speed > -topSpeed) {
+				speed -= acceleration * Gdx.graphics.getDeltaTime();
+				System.out.println("Slowing" + speed);
+			}
+		} else {
+			if (speed > 0) {
+				speed -= deacceleration * Gdx.graphics.getDeltaTime();
+			} else if (speed < 0) {
+				speed += deacceleration * Gdx.graphics.getDeltaTime();
+			}
 		}
-	} else if (Gdx.input.isKeyPressed(Keys.S)) {
-		if (speed > -topSpeed) {
-			speed -= acceleration*Gdx.graphics.getDeltaTime();
-			System.out.println("Slowing" + speed);
-		}
-	}else{
-		if(speed>0){
-			speed-=deacceleration*Gdx.graphics.getDeltaTime();
-		}else if(speed<0){
-			speed+=deacceleration*Gdx.graphics.getDeltaTime();
+		if (speed > 10) {
+
+			if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
+				angle = angle + angleChange;
+			} else if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
+				angle = angle - angleChange;
+			}
+		} else if (speed < -10) {
+			if (Gdx.input.isKeyPressed(Keys.A) || Gdx.input.isKeyPressed(Keys.LEFT)) {
+				angle = angle - 1.2f;
+			} else if (Gdx.input.isKeyPressed(Keys.D) || Gdx.input.isKeyPressed(Keys.RIGHT)) {
+				angle = angle + 1.2f;
+			}
 		}
 	}
-	if (Gdx.input.isKeyPressed(Keys.A)) {
-		 angle = angle + 1.2f;
-	} else if (Gdx.input.isKeyPressed(Keys.D)) {
-		 angle = angle - 1.2f;
-	} 
-}
-private void turning(){
-	
-}
+
+	private void turning() {
+
+	}
 }
