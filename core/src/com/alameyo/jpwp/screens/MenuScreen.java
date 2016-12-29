@@ -15,11 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-
+/**
+ * Game main menu
+ */
 public class MenuScreen implements Screen
 	{
-		private MainClass game;
-		
+		private MainClass game;		
 		private Skin skin;
 		private Stage stage;
 		
@@ -61,7 +62,6 @@ public class MenuScreen implements Screen
 					
 			textButton1.addListener(new ChangeListener() {
 				public void changed (ChangeEvent event, Actor actor) {
-					System.out.println("Clicked! Is checked: " + textButton1.isChecked());
 					textButton1.setText("Starting new game");
 					game.setScreen( new GameScreen(game));
 				}

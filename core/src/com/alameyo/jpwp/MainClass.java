@@ -4,14 +4,16 @@ import com.alameyo.jpwp.screens.GameScreen;
 import com.alameyo.jpwp.screens.MenuScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
+/*
+ * Main class of game, which is invocated
+ * by main method in one of game's launchers.
+ */
 public class MainClass extends Game {
     SpriteBatch batch;
         
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		System.out.println("rwrw");
 		this.setScreen(new MenuScreen(this));
 	}
 

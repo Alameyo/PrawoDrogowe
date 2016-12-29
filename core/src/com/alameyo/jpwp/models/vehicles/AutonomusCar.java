@@ -4,8 +4,9 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class AutonomusCar extends Car {
 
-	public AutonomusCar(World world) {
-		super(world);
+
+	public AutonomusCar(World world, float x, float y) {
+		super(world, x, y);
 		// TODO Auto-generated constructor stub
 	}
 	public void canIgo(boolean roadLeft, boolean roadRight, boolean roadStraight){

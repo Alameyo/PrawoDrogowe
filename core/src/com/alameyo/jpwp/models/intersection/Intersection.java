@@ -1,63 +1,107 @@
 package com.alameyo.jpwp.models.intersection;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.alameyo.jpwp.models.vehicles.Car;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 
-public class Intersection {
+public class Intersection extends Rectangle {
 
-	//road logic
-	Road roadLeft;
-	Road roadRight;
-	Road roadUp;
-	Road roadDown;
-	boolean leftTaken;
-	boolean rightTaken;
-	boolean upTaken;
-	boolean downTaken;
-	
-	
-	protected Sprite sprite;
-	protected Texture img;
-	boolean taken;
+	private static final long serialVersionUID = 1L;
+	// road logic
+	protected Road roadLeft;
+	protected Road roadRight;
+	protected Road roadUp;
+	protected Road roadDown;
+	protected boolean leftTaken;
+	protected boolean rightTaken;
+	protected boolean upTaken;
+	protected boolean downTaken;
+
+	protected boolean taken;
 
 	public float x;
 	public float y;
 
-	BodyDef bodyDef;
-	Body body;
+	protected Sprite sprite;
+	protected Texture img;
 
-	public Intersection(World world,float x, float y) {
-		img = new Texture("cross.png");
+	public Intersection(Builder builder) {
+		
+		this.roadLeft = builder.roadLeft;
+		this.roadRight = builder.roadRight;
+		this.roadUp = builder.roadUp;
+		this.roadDown = builder.roadDown;
+		this.x = builder.x;
+		this.y = builder.y;
 
-		sprite = new Sprite(img);
-	//	sprite.flip(axisX, axisY);
-
-		this.x = x;
-		this.y = y;
+		sprite = new Sprite(new Texture("cross.png"));
+		
 		sprite.setPosition(x, y);
-
-		bodyDef = new BodyDef();
-		bodyDef.type = BodyDef.BodyType.StaticBody;
-		bodyDef.position.set(sprite.getX(), sprite.getY());
-
-		this.body = world.createBody(bodyDef);
-
-		// Create a polygon shape
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
-		body.createFixture(shape, 0.0f);
-		// Clean up after ourselves
-		shape.dispose();
-
+	}
+	
+	void interUpdate(){
+		
 	}
 
+	boolean roadListener(Road road, Car car){
+		boolean roadTaken;
+		if(Intersector.overlapConvexPolygons(road, car)){
+			roadTaken = true;
+		}
+		return roadTaken;
+	}
+	
+	public static class Builder {
+		
+		protected Road roadLeft;
+		protected Road roadRight;
+		protected Road roadUp;
+		protected Road roadDown;
+
+		public float x;
+		public float y;
+
+		protected Sprite sprite;
+		protected Texture img;
+
+		public Builder roadLeft(Road roadLeft) {
+			this.roadLeft = roadLeft;
+			return this;
+		}
+
+		public Builder roadRight(Road roadRight) {
+			this.roadRight = roadRight;
+			return this;
+		}
+
+		public Builder roadUp(Road roadUp) {
+			this.roadUp = roadUp;
+			return this;
+		}
+
+		public Builder roadDown(Road roadDown) {
+			this.roadDown = roadDown;
+			return this;
+		}
+
+		public Builder x(float x) {
+			this.x = x;
+			return this;
+		}
+
+		public Builder y(float y) {
+			this.y = y;
+			return this;
+		}
+
+		public Intersection build() {
+			return new Intersection(this);
+		}
+
+	}
+	
 	public Sprite getSprite() {
 		return sprite;
 	}
