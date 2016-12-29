@@ -28,7 +28,7 @@ public class Intersection extends Rectangle {
 	protected Texture img;
 
 	public Intersection(Builder builder) {
-		
+
 		this.roadLeft = builder.roadLeft;
 		this.roadRight = builder.roadRight;
 		this.roadUp = builder.roadUp;
@@ -37,24 +37,39 @@ public class Intersection extends Rectangle {
 		this.y = builder.y;
 
 		sprite = new Sprite(new Texture("cross.png"));
-		
+
 		sprite.setPosition(x, y);
 	}
-	
-	void interUpdate(){
-		
+
+	public void interUpdate(Car car) {
+		try {
+			this.leftTaken = roadListener(roadLeft, car);
+			System.out.println("bagagasga");
+		} catch (NullPointerException e) {}
+		try {
+			this.rightTaken = roadListener(roadRight, car);
+		} catch (NullPointerException e) {}
+		try {
+			this.upTaken = roadListener(roadUp, car);
+		} catch (NullPointerException e) {}
+		try {
+			this.downTaken = roadListener(roadDown, car);
+		} catch (NullPointerException e) {}
 	}
 
-	boolean roadListener(Road road, Car car){
+	boolean roadListener(Road road, Car car) {
 		boolean roadTaken;
-		if(Intersector.overlapConvexPolygons(road, car)){
+		if (Intersector.overlapConvexPolygons(road.rectToPoly, car)) {
 			roadTaken = true;
+			System.out.println("Na drodze");
+		} else {
+			roadTaken = false;
 		}
 		return roadTaken;
 	}
-	
+
 	public static class Builder {
-		
+
 		protected Road roadLeft;
 		protected Road roadRight;
 		protected Road roadUp;
@@ -101,7 +116,7 @@ public class Intersection extends Rectangle {
 		}
 
 	}
-	
+
 	public Sprite getSprite() {
 		return sprite;
 	}
