@@ -39,11 +39,11 @@ public class Road extends Rectangle{
 		this.x=x;
 		this.y=y;
 		sprite.setPosition(x, y);
-		rectToPoly = new Polygon(new float[] { sprite.getX(), sprite.getY(), sprite.getX(), sprite.getWidth(), sprite.getWidth(),
-	            sprite.getHeight(), sprite.getX(), sprite.getHeight() });
+		rectToPoly = new Polygon(new float[] { 0, 0, 0, 0+sprite.getHeight(), 0 + sprite.getWidth(),
+	            0 + sprite.getHeight(), 0+sprite.getWidth(), 0 });
 	    rectToPoly.setPosition(x, y);
-
-		
+	    rectToPoly.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
+	    rectToPoly.rotate(angle);
 	}
 	
 	

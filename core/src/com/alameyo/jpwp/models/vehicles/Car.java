@@ -36,8 +36,8 @@ public abstract class Car extends Polygon {
 		sprite = new Sprite(img);
 		this.x = x;
 		this.y = y;
-		//x = Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2;
-		//y = Gdx.graphics.getHeight() / 2 - sprite.getHeight() / 2;
+		// x = Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2;
+		// y = Gdx.graphics.getHeight() / 2 - sprite.getHeight() / 2;
 		sprite.setPosition(x, y);
 		this.setPosition(x, y);
 		this.setOrigin(x, y);
@@ -52,11 +52,9 @@ public abstract class Car extends Polygon {
 		angle = 90;
 		polygonAdjust = 5;
 
-		this.setVertices(new float[] { sprite.getX() + polygonAdjust, sprite.getY() + polygonAdjust,
-				sprite.getX() + sprite.getWidth() - polygonAdjust, sprite.getY() + polygonAdjust,
-				sprite.getX() + sprite.getWidth() - polygonAdjust, sprite.getY() + sprite.getHeight() - polygonAdjust,
-				sprite.getX() + polygonAdjust, sprite.getY() + sprite.getHeight() -polygonAdjust });
-		this.setOrigin(this.x, this.y);
+		this.setVertices(new float[] { 0, 0, 0, 0 + sprite.getHeight(), 0 + sprite.getWidth(), 0 + sprite.getHeight(),
+				0 + sprite.getWidth(), 0 });
+		this.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		this.setRotation(angle);
 
 	}

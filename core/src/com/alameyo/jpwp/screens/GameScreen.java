@@ -55,6 +55,8 @@ public class GameScreen implements Screen {
 
 		roadList = new ArrayList<Road>();
 		interSectionList = new ArrayList<Intersection>();
+		
+		//inter1 road1
 		roadList.add(new Road(world, 100, 100, false, false, false));
 		roadList.add(new Road(world, 300, 100, false, false, false));
 		roadList.add(new Road(world, 500, 100, false, false, false));
@@ -69,23 +71,23 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 900, 0, false, true, false));
 		roadList.add(new Road(world, 1100, 0, false, true, false));
 
-		//inter1
+		//inter1/2 road 2
 
-		roadList.add(new Road(world, 1250, 200, false, false, true));
-		roadList.add(new Road(world, 1250, 400, false, false, true));
-		roadList.add(new Road(world, 1250, 600, false, false, true));
-		roadList.add(new Road(world, 1250, 800, false, false, true));
-		roadList.add(new Road(world, 1250, 1000, false, false, true));
-		roadList.add(new Road(world, 1250, 1200, false, false, true));
+		roadList.add(new Road(world, 1250, 250, false, false, true));
+		roadList.add(new Road(world, 1250, 450, false, false, true));
+		roadList.add(new Road(world, 1250, 650, false, false, true));
+		roadList.add(new Road(world, 1250, 850, false, false, true));
+		roadList.add(new Road(world, 1250, 1050, false, false, true));
+		roadList.add(new Road(world, 1250, 1250, false, false, true));
 
-		roadList.add(new Road(world, 1350, 200, false, true, true));
-		roadList.add(new Road(world, 1350, 400, false, true, true));
-		roadList.add(new Road(world, 1350, 600, false, true, true));
-		roadList.add(new Road(world, 1350, 800, false, true, true));
-		roadList.add(new Road(world, 1350, 1000, false, true, true));
-		roadList.add(new Road(world, 1350, 1200, false, true, true));
+		roadList.add(new Road(world, 1350, 250, false, true, true));
+		roadList.add(new Road(world, 1350, 450, false, true, true));
+		roadList.add(new Road(world, 1350, 650, false, true, true));
+		roadList.add(new Road(world, 1350, 850, false, true, true));
+		roadList.add(new Road(world, 1350, 1050, false, true, true));
+		roadList.add(new Road(world, 1350, 1250, false, true, true));
 
-		//inter2
+		//inter1 road 3
 
 		roadList.add(new Road(world, 1250, -150, false, false, true));
 		roadList.add(new Road(world, 1250, -350, false, false, true));
@@ -100,8 +102,25 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 1350, -750, false, true, true));
 		roadList.add(new Road(world, 1350, -950, false, true, true));
 		roadList.add(new Road(world, 1350, -1150, false, true, true));
-		interSectionList.add(new Intersection.Builder().x(1300).y(0).roadLeft(roadList.get(11)).roadUp(roadList.get(17)).roadDown(roadList.get(30)).build());
-		interSectionList.add(new Intersection.Builder().x(1300).y(1300).build());
+		
+		//inter2 road4
+		
+		roadList.add(new Road(world, 100, 1500, false, false, false));
+		roadList.add(new Road(world, 300, 1500, false, false, false));
+		roadList.add(new Road(world, 500, 1500, false, false, false));
+		roadList.add(new Road(world, 700, 1500, false, false, false));
+		roadList.add(new Road(world, 900, 1500, false, false, false));
+		roadList.add(new Road(world, 1100,1500, false, false, false));
+
+		roadList.add(new Road(world, 100, 1400, false, true, false));
+		roadList.add(new Road(world, 300, 1400, false, true, false));
+		roadList.add(new Road(world, 500, 1400, false, true, false));
+		roadList.add(new Road(world, 700, 1400, false, true, false));
+		roadList.add(new Road(world, 900, 1400, false, true, false));
+		roadList.add(new Road(world, 1100, 1400, false, true, false));
+
+		interSectionList.add(new Intersection.Builder().x(1300).y(0).roadLeft(roadList.get(11)).roadUp(roadList.get(12)).roadDown(roadList.get(30)).build());
+		interSectionList.add(new Intersection.Builder().x(1300).y(1400).build());
 	}
 
 	/**
@@ -190,6 +209,9 @@ public class GameScreen implements Screen {
 		batch.end();
 		drawDebug(shapeRenderer, car);
 		drawDebug(shapeRenderer, roadList.get(11).getRectToPoly());
+		drawDebug(shapeRenderer, roadList.get(12).getRectToPoly());
+		drawDebug(shapeRenderer, roadList.get(30).getRectToPoly());
+		drawDebug(shapeRenderer, roadList.get(47).getRectToPoly());
 	}
 
 	void drawDebug(ShapeRenderer shapeRenderer, Polygon ca) {

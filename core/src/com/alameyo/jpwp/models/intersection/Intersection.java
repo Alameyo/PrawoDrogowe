@@ -44,7 +44,6 @@ public class Intersection extends Rectangle {
 	public void interUpdate(Car car) {
 		try {
 			this.leftTaken = roadListener(roadLeft, car);
-			System.out.println("bagagasga");
 		} catch (NullPointerException e) {}
 		try {
 			this.rightTaken = roadListener(roadRight, car);
