@@ -31,7 +31,7 @@ public abstract class Car extends Polygon {
 
 	private float polygonAdjust;
 
-	public Car(World world, float x, float y) {
+	public Car(World world, float x, float y, float angle) {
 		img = new Texture("autko1.png");
 		sprite = new Sprite(img);
 		this.x = x;
@@ -49,7 +49,7 @@ public abstract class Car extends Polygon {
 		velX = 0;
 		velY = 0;
 		topSpeed = 450f;
-		angle = 90;
+		//angle = 90;
 		polygonAdjust = 5;
 
 		this.setVertices(new float[] { 0, 0, 0, 0 + sprite.getHeight(), 0 + sprite.getWidth(), 0 + sprite.getHeight(),

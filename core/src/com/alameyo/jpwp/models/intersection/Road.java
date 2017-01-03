@@ -57,8 +57,13 @@ public class Road extends Rectangle{
 	}
 
 
-	public void isTaken(){
-		
+	public boolean isTaken(){
+		return taken;
+	}
+
+
+	public void setTaken(boolean taken) {
+		this.taken = taken;
 	}
 	
 }

@@ -7,8 +7,8 @@ import com.badlogic.gdx.physics.box2d.World;
 public class PlayerCar extends Car {
 
 
-public PlayerCar(World world, float x, float y) {
-		super(world, x, y);
+public PlayerCar(World world, float x, float y, float angle) {
+		super(world, x, y, angle);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -20,14 +20,14 @@ public PlayerCar(World world, float x, float y) {
 		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
 			if (speed < topSpeed) {
 				speed += acceleration * Gdx.graphics.getDeltaTime();
-				System.out.println("Faster" + speed);
+			//	System.out.println("Faster" + speed);
 			}else{
 				
 			}
 		} else if (Gdx.input.isKeyPressed(Keys.S) ||Gdx.input.isKeyPressed(Keys.DOWN)) {
 			if (speed > -topSpeed) {
 				speed -= acceleration * Gdx.graphics.getDeltaTime();
-				System.out.println("Slowing" + speed);
+				//System.out.println("Slowing" + speed);
 			}
 		} else {
 			if (speed > 0) {

@@ -1,6 +1,7 @@
 package com.alameyo.jpwp.screens;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.alameyo.jpwp.MainClass;
 import com.alameyo.jpwp.models.intersection.Intersection;
@@ -38,6 +39,7 @@ public class GameScreen implements Screen {
 	OrthographicCamera cam;
 	ArrayList<Road> roadList;
 	ArrayList<Intersection> interSectionList;
+	LinkedList<AutonomusCar> autoCarList;
 	// Intersector intersector;
 	private ShapeRenderer shapeRenderer;
 
@@ -48,8 +50,10 @@ public class GameScreen implements Screen {
 		world = new World(new Vector2(0f, 0f), true);
 		cam = new OrthographicCamera(1024, 800);
 		batch = new SpriteBatch();
-		car = new PlayerCar(world, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2);
-		car2 = new AutonomusCar(world, 100, 100);
+		car = new PlayerCar(world, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 90);
+		
+		autoCarList = new LinkedList<AutonomusCar>(); 
+		autoCarList.add(new AutonomusCar(world, 0, 0, 0));
 		// intersector = new Intersector();
 		shapeRenderer = new ShapeRenderer();
 
@@ -120,7 +124,7 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 1100, 1400, false, true, false));
 
 		interSectionList.add(new Intersection.Builder().x(1300).y(0).roadLeft(roadList.get(11)).roadUp(roadList.get(12)).roadDown(roadList.get(30)).build());
-		interSectionList.add(new Intersection.Builder().x(1300).y(1400).build());
+		interSectionList.add(new Intersection.Builder().x(1300).y(1400).roadLeft(roadList.get(47)).build());
 	}
 
 	/**
@@ -133,9 +137,12 @@ public class GameScreen implements Screen {
 		batch.setProjectionMatrix(cam.combined);
 		cam.position.set(car.x + car.getSprite().getWidth() / 2, car.y + car.getSprite().getHeight(), 0);
 		car.carUpdate();
-		car2.carUpdate();
 		for (Intersection intersection : interSectionList) {
 			intersection.interUpdate(car);
+		}
+		for (AutonomusCar autoCar : autoCarList){
+			autoCar.carUpdate();
+			autoCar.carUpdate(interSectionList);
 		}
 		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
 			cam.zoom = 10.02f;
@@ -199,11 +206,14 @@ public class GameScreen implements Screen {
 		}
 		car.getSprite().draw(batch);
 
-		car2.getSprite().draw(batch);
-		if (Intersector.overlapConvexPolygons(car, car2)) {
-			System.out.println("Kolizja");
+		for (AutonomusCar autoCar : autoCarList) {
+			autoCar.getSprite().draw(batch);
 		}
-		
+
+//		if (Intersector.overlapConvexPolygons(car, car2)) {
+	//		System.out.println("Kolizja");
+		//}
+
 		// drawDebug(shapeRenderer, car2);
 
 		batch.end();

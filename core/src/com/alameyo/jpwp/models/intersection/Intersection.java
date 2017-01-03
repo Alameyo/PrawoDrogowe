@@ -67,6 +67,54 @@ public class Intersection extends Rectangle {
 		return roadTaken;
 	}
 
+	public boolean isLeftTaken() {
+		return leftTaken;
+	}
+
+	public void setLeftTaken(boolean leftTaken) {
+		this.leftTaken = leftTaken;
+	}
+
+	public boolean isRightTaken() {
+		return rightTaken;
+	}
+
+	public void setRightTaken(boolean rightTaken) {
+		this.rightTaken = rightTaken;
+	}
+
+	public boolean isUpTaken() {
+		return upTaken;
+	}
+
+	public void setUpTaken(boolean upTaken) {
+		this.upTaken = upTaken;
+	}
+
+	public boolean isDownTaken() {
+		return downTaken;
+	}
+
+	public void setDownTaken(boolean downTaken) {
+		this.downTaken = downTaken;
+	}
+
+	public Road getRoadLeft() {
+		return roadLeft;
+	}
+
+	public Road getRoadRight() {
+		return roadRight;
+	}
+
+	public Road getRoadUp() {
+		return roadUp;
+	}
+
+	public Road getRoadDown() {
+		return roadDown;
+	}
+
 	public static class Builder {
 
 		protected Road roadLeft;
