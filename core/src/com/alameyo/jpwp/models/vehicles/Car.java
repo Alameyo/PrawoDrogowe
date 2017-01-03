@@ -1,19 +1,19 @@
 package com.alameyo.jpwp.models.vehicles;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Car {
-	public Body body;
+/**
+ * @author Pawe³ Œcibiorski Abstract class for cars
+ *
+ */
+public abstract class Car extends Polygon {
+
+	// public Body body;
 	protected Sprite sprite;
 	protected Texture img;
 	public float x;
@@ -23,72 +23,63 @@ public class Car {
 	protected float acceleration;
 	protected float deacceleration;
 	protected float angle;
+	protected float angleChange;
 	protected float velX;
 	protected float velY;
 	protected float height;
 	protected float width;
-	
 
-	private PolygonShape shape;
-	private BodyDef bodyDef;
-	private FixtureDef fixtureDef;
-	private Fixture fixture;
+	private float polygonAdjust;
 
-	public Car(World world) {
-		img = new Texture("car.jpg");
+	public Car(World world, float x, float y, float angle) {
+		img = new Texture("autko1.png");
 		sprite = new Sprite(img);
-		
-		
-		x = Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2;
-		y = Gdx.graphics.getHeight() / 2 - sprite.getHeight() / 2;
+		this.x = x;
+		this.y = y;
+		// x = Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2;
+		// y = Gdx.graphics.getHeight() / 2 - sprite.getHeight() / 2;
 		sprite.setPosition(x, y);
+		this.setPosition(x, y);
+		this.setOrigin(x, y);
 
 		speed = 0;
-		acceleration = 30;
-		deacceleration =18;
+		acceleration = 80;
+		deacceleration = acceleration + 20;
+		angleChange = 2.2f;
 		velX = 0;
 		velY = 0;
-		topSpeed = 150f;
-		// body
-		bodyDef = new BodyDef();
-		bodyDef.type = BodyDef.BodyType.DynamicBody;
-		bodyDef.position.set(sprite.getX(), sprite.getY());
-		this.body = world.createBody(bodyDef);
+		topSpeed = 450f;
+		//angle = 90;
+		polygonAdjust = 5;
 
-		angle = 90;//MathUtils.radiansToDegrees * body.getAngle();
-		// fixture
-		shape = new PolygonShape();
-		shape.setAsBox(sprite.getWidth() / 2, sprite.getHeight() / 2);
-		fixtureDef = new FixtureDef();
-		fixtureDef.shape = shape;
-		fixtureDef.density = 1f;
+		this.setVertices(new float[] { 0, 0, 0, 0 + sprite.getHeight(), 0 + sprite.getWidth(), 0 + sprite.getHeight(),
+				0 + sprite.getWidth(), 0 });
+		this.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
+		this.setRotation(angle);
 
-		fixture = body.createFixture(fixtureDef);
-
-		shape.dispose();
 	}
 
 	public void carUpdate() {
 		controlls();
 		velX = MathUtils.cos(MathUtils.degreesToRadians * angle) * speed * Gdx.graphics.getDeltaTime(); // X-component.
 		velY = MathUtils.sin(MathUtils.degreesToRadians * angle) * speed * Gdx.graphics.getDeltaTime(); // Y-component.
-		//angle = body.getAngle();
-		x = x+velX;
-		y = y+velY;
-		body.setTransform(x, y, angle);
+		// angle = body.getAngle();
+		x = x + velX;
+		y = y + velY;
+		this.setPosition(x, y);
+		this.setRotation(angle);
 		checkForCollision();
-		//body.setLinearVelocity(velX, velY);
-		System.out.println(body.getAngle() + "||||" + angle);
-		//body.setAngularVelocity(angle);
-		sprite.setPosition(body.getPosition().x, body.getPosition().y);
+
+		sprite.setPosition(x, y);
 		sprite.setRotation(angle);
 	}
-	protected void controlls(){
-		
+
+	abstract protected void controlls();
+
+	protected void checkForCollision() {
+
 	}
-	protected void checkForCollision(){
-		
-	}
+
 	public void dispose() {
 		img.dispose();
 	}

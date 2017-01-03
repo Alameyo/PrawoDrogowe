@@ -1,47 +1,69 @@
 package com.alameyo.jpwp.models.intersection;
 
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Road {
+public class Road extends Rectangle{
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected Sprite sprite;
 	protected Texture img;
 	boolean taken;
 	
 	
-	public Road(World world){
-		// Create our body definition
-		BodyDef groundBodyDef = new BodyDef();  
-		// Set its world position
-		groundBodyDef.position.set(new Vector2(0, 10));  
-
-		// Create a body from the defintion and add it to the world
-		Body groundBody = world.createBody(groundBodyDef);  
-
-		// Create a polygon shape
-		PolygonShape groundBox = new PolygonShape();  
-		// Set the polygon shape as a box which is twice the size of our view port and 20 high
-		// (setAsBox takes half-width and half-height as arguments)
-		groundBox.setAsBox(1024.0f, 10.0f);
-		// Create a fixture from our polygon shape and add it to our ground body  
-		groundBody.createFixture(groundBox, 0.0f); 
-		// Clean up after ourselves
-		groundBox.dispose();
+	public float x;
+	public float y;
+	private float angle;
+	Polygon rectToPoly;
+		
+	public Road(World world, float x, float y, boolean axisX, boolean axisY, boolean rotate){
+		img = new Texture("blokDrogi.png");
+		
+		sprite = new Sprite(img);
+		sprite.flip(axisX, axisY);
+		if(rotate == true){
+			angle = 90;
+		}else{
+			angle =0;
+		}
+		
+		sprite.rotate(angle);
+		
+		this.x=x;
+		this.y=y;
+		sprite.setPosition(x, y);
+		rectToPoly = new Polygon(new float[] { 0, 0, 0, 0+sprite.getHeight(), 0 + sprite.getWidth(),
+	            0 + sprite.getHeight(), 0+sprite.getWidth(), 0 });
+	    rectToPoly.setPosition(x, y);
+	    rectToPoly.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
+	    rectToPoly.rotate(angle);
 	}
 	
 	
-	public void isTaken(){
-		
+	public Sprite getSprite() {
+		return sprite;
+	}
+
+
+	public Polygon getRectToPoly() {
+		return rectToPoly;
+	}
+
+
+	public boolean isTaken(){
+		return taken;
+	}
+
+
+	public void setTaken(boolean taken) {
+		this.taken = taken;
 	}
 	
 }

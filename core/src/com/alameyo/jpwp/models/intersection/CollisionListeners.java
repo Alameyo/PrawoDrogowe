@@ -1,31 +1,19 @@
 package com.alameyo.jpwp.models.intersection;
 
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Manifold;
+import java.util.LinkedList;
 
-public class CollisionListeners implements ContactListener {
-        @Override
-        public void endContact(Contact contact) {
+import com.alameyo.jpwp.models.vehicles.Car;
 
-        }
+/**
+ * Class with methods handling collisions.
+ *
+ */
+public class CollisionListeners {
 
-        @Override
-        public void beginContact(Contact contact) {
-
-        }
-
-		@Override
-		public void preSolve(Contact contact, Manifold oldManifold) {
-			// TODO Auto-generated method stub
-			
+	void listenRoadCar(Car car, LinkedList<Intersection> interSectionList) {
+		for (Intersection intersection : interSectionList) {
+			intersection.interUpdate(car);
 		}
+	}
 
-		@Override
-		public void postSolve(Contact contact, ContactImpulse impulse) {
-			// TODO Auto-generated method stub
-			
-		}
-    
 }
