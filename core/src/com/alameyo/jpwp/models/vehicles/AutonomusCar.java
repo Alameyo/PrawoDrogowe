@@ -18,18 +18,23 @@ public class AutonomusCar extends Car {
 	Random rand;
 	boolean turning;
 	boolean go;
+	boolean newWay;
 	float pastAngle;
 	float pastX;
 	float pastY;
+	int takenRoad;
+	Intersection currentIntersection;
 
 	public AutonomusCar(World world, float x, float y, float angle) {
 		super(world, x, y, angle);
 		rand = new Random();
-		speed = 30;
+		speed = 0;
 		turning = false;
+		newWay = true;
+		
 	}
 
-	public void canIgoAhead(boolean roadLeft, boolean roadRight, boolean roadStraight) {
+	public void canIgoAhead(boolean roadLeft, boolean roadRight, boolean roadAhead) {
 		if (roadRight == true) {
 			canIgo = false;
 		} else {
@@ -37,7 +42,7 @@ public class AutonomusCar extends Car {
 		}
 	}
 
-	public void canIgoRight(boolean roadLeft, boolean roadRight, boolean roadStraight) {
+	public void canIgoRight(boolean roadLeft, boolean roadRight, boolean roadAhead) {
 		if (roadLeft == true) {
 			canIgo = false;
 		} else {
@@ -45,9 +50,8 @@ public class AutonomusCar extends Car {
 		}
 	}
 
-	public void canIgoLeft(boolean roadLeft, boolean roadRight, boolean roadStraight, boolean leftSign,
-			boolean rightSign, boolean straightSign, boolean way) {
-		if (roadLeft == true || roadRight == true || roadStraight == true) {
+	public void canIgoLeft(boolean roadLeft, boolean roadRight, boolean roadAhead,boolean way) {
+		if (roadLeft == true || roadRight == true || roadAhead == true) {
 			canIgo = false;
 		} else {
 			canIgo = true;
@@ -57,22 +61,27 @@ public class AutonomusCar extends Car {
 	public void carUpdate(ArrayList<Intersection> interSectionList) {
 		checkForCollision(interSectionList);
 	}
-
+	@Override
 	protected void controlls() {
 		if (turning == false) {
-			if (Gdx.input.isKeyPressed(Keys.K) == true) {
+			if (go == true) {//Gdx.input.isKeyPressed(Keys.K) == true
 				speed = 150;
-			} else if (Gdx.input.isKeyPressed(Keys.L) == true) {
+				if(currentIntersection.getRoadLeft().isTaken() == true){
+					go = false;
+				}
+			} else if (myWay == 2) {//Gdx.input.isKeyPressed(Keys.L) == true
 				pastAngle = angle;
-				myWay = 2;
+			//	myWay = 2;
+				//canIgoRight(currentIntersection.getRoadDown(), roadRight, roadAhead);
 				turnRight();
-			} else if (Gdx.input.isKeyPressed(Keys.J) == true) {
+			} else if (myWay ==1) { //Gdx.input.isKeyPressed(Keys.J) == true
 				pastAngle = angle;
-				myWay = 1;
+				//myWay = 1;
 				turnLeft();
-			} else if (Gdx.input.isKeyPressed(Keys.I) == true) {
+			} else if (myWay == 0) { //Gdx.input.isKeyPressed(Keys.I) == true
 				pastX = x;
 				pastY = y;
+				System.out.println("Na wprost");
 				goAhead();
 			} else {
 				speed = 0;
@@ -84,14 +93,15 @@ public class AutonomusCar extends Car {
 		} else if (myWay == 0) {
 			goAhead();
 		}
-
+		try{
+			if(currentIntersection.getRoadLeft().isTaken() == true)
+			System.out.println("zajete");
+		}catch(NullPointerException e){};
 	}
 
-	private void turn(Intersection intersection) {
+	private void turnPrepare(boolean newWay) {
+		if(newWay == true){
 		myWay = rand.nextInt(3);
-		if (myWay == 0 || angle == 0) {
-			canIgoAhead(intersection.getRoadLeft().isTaken(), intersection.getRoadRight().isTaken(),
-					intersection.getRoadDown().isTaken());
 		}
 	}
 
@@ -111,6 +121,9 @@ public class AutonomusCar extends Car {
 		speed = 250;
 		if (pastAngle - 90 == angle) {
 			turning = false;
+			if (angle == -360) {
+				angle = 0;
+			}
 		}
 		System.out.println(angle + "   " + pastAngle);
 	}
@@ -121,6 +134,9 @@ public class AutonomusCar extends Car {
 		speed = 450;
 		if (pastAngle + 90 == angle) {
 			turning = false;
+			if (angle == 360) {
+				angle = 0;
+			}
 		}
 		System.out.println(angle + "   " + pastAngle);
 	}
@@ -131,17 +147,25 @@ public class AutonomusCar extends Car {
 				if (Intersector.overlapConvexPolygons(this, intersection.getRoadRight().getRectToPoly())) {
 					System.out.println("Kolizja1");
 					intersection.getRoadRight().setTaken(true);
+					turnPrepare(newWay);
+					newWay = true;
 				} else {
 					intersection.getRoadRight().setTaken(false);
+					newWay = false;
 				}
+				
 			} catch (NullPointerException e) {
 			}
 			try {
 				if (Intersector.overlapConvexPolygons(this, intersection.getRoadLeft().getRectToPoly())) {
 					System.out.println("Kolizja2");
 					intersection.getRoadLeft().setTaken(true);
+					currentIntersection = intersection;
+					turnPrepare(newWay);
+					newWay = true;
 				} else {
 					intersection.getRoadLeft().setTaken(false);
+					newWay = false;
 				}
 			} catch (NullPointerException e) {
 			}
@@ -149,6 +173,7 @@ public class AutonomusCar extends Car {
 				if (Intersector.overlapConvexPolygons(this, intersection.getRoadUp().getRectToPoly())) {
 					System.out.println("Kolizja3");
 					intersection.getRoadUp().setTaken(true);
+					currentIntersection = intersection;
 				} else {
 					intersection.getRoadUp().setTaken(false);
 				}
@@ -158,6 +183,7 @@ public class AutonomusCar extends Car {
 				if (Intersector.overlapConvexPolygons(this, intersection.getRoadDown().getRectToPoly())) {
 					System.out.println("kolizja4");
 					intersection.getRoadDown().setTaken(true);
+					currentIntersection = intersection;
 				} else {
 					intersection.getRoadDown().setTaken(false);
 				}

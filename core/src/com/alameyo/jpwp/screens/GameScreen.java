@@ -51,16 +51,16 @@ public class GameScreen implements Screen {
 		cam = new OrthographicCamera(1024, 800);
 		batch = new SpriteBatch();
 		car = new PlayerCar(world, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 90);
-		
-		autoCarList = new LinkedList<AutonomusCar>(); 
+
+		autoCarList = new LinkedList<AutonomusCar>();
 		autoCarList.add(new AutonomusCar(world, 0, 0, 0));
 		// intersector = new Intersector();
 		shapeRenderer = new ShapeRenderer();
 
 		roadList = new ArrayList<Road>();
 		interSectionList = new ArrayList<Intersection>();
-		
-		//inter1 road1
+
+		// inter1 road1
 		roadList.add(new Road(world, 100, 100, false, false, false));
 		roadList.add(new Road(world, 300, 100, false, false, false));
 		roadList.add(new Road(world, 500, 100, false, false, false));
@@ -75,7 +75,7 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 900, 0, false, true, false));
 		roadList.add(new Road(world, 1100, 0, false, true, false));
 
-		//inter1/2 road 2
+		// inter1/2 road 2
 
 		roadList.add(new Road(world, 1250, 250, false, false, true));
 		roadList.add(new Road(world, 1250, 450, false, false, true));
@@ -91,7 +91,7 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 1350, 1050, false, true, true));
 		roadList.add(new Road(world, 1350, 1250, false, true, true));
 
-		//inter1 road 3
+		// inter1 road 3
 
 		roadList.add(new Road(world, 1250, -150, false, false, true));
 		roadList.add(new Road(world, 1250, -350, false, false, true));
@@ -106,15 +106,15 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 1350, -750, false, true, true));
 		roadList.add(new Road(world, 1350, -950, false, true, true));
 		roadList.add(new Road(world, 1350, -1150, false, true, true));
-		
-		//inter2 road4
-		
+
+		// inter2 road4
+
 		roadList.add(new Road(world, 100, 1500, false, false, false));
 		roadList.add(new Road(world, 300, 1500, false, false, false));
 		roadList.add(new Road(world, 500, 1500, false, false, false));
 		roadList.add(new Road(world, 700, 1500, false, false, false));
 		roadList.add(new Road(world, 900, 1500, false, false, false));
-		roadList.add(new Road(world, 1100,1500, false, false, false));
+		roadList.add(new Road(world, 1100, 1500, false, false, false));
 
 		roadList.add(new Road(world, 100, 1400, false, true, false));
 		roadList.add(new Road(world, 300, 1400, false, true, false));
@@ -123,7 +123,8 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 900, 1400, false, true, false));
 		roadList.add(new Road(world, 1100, 1400, false, true, false));
 
-		interSectionList.add(new Intersection.Builder().x(1300).y(0).roadLeft(roadList.get(11)).roadUp(roadList.get(12)).roadDown(roadList.get(30)).build());
+		interSectionList.add(new Intersection.Builder().x(1300).y(0).roadLeft(roadList.get(11)).roadUp(roadList.get(12))
+				.roadDown(roadList.get(30)).build());
 		interSectionList.add(new Intersection.Builder().x(1300).y(1400).roadLeft(roadList.get(47)).build());
 	}
 
@@ -140,9 +141,9 @@ public class GameScreen implements Screen {
 		for (Intersection intersection : interSectionList) {
 			intersection.interUpdate(car);
 		}
-		for (AutonomusCar autoCar : autoCarList){
-			autoCar.carUpdate();
+		for (AutonomusCar autoCar : autoCarList) {
 			autoCar.carUpdate(interSectionList);
+			autoCar.carUpdate();
 		}
 		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
 			cam.zoom = 10.02f;
@@ -210,9 +211,9 @@ public class GameScreen implements Screen {
 			autoCar.getSprite().draw(batch);
 		}
 
-//		if (Intersector.overlapConvexPolygons(car, car2)) {
-	//		System.out.println("Kolizja");
-		//}
+		// if (Intersector.overlapConvexPolygons(car, car2)) {
+		// System.out.println("Kolizja");
+		// }
 
 		// drawDebug(shapeRenderer, car2);
 
