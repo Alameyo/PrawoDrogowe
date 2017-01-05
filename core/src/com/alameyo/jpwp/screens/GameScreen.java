@@ -75,7 +75,7 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 900, 0, false, true, false));
 		roadList.add(new Road(world, 1100, 0, false, true, false));
 
-		// inter1/2 road 2
+		// inter1/2 road 2 //num11
 
 		roadList.add(new Road(world, 1250, 250, false, false, true));
 		roadList.add(new Road(world, 1250, 450, false, false, true));
@@ -91,7 +91,7 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 1350, 1050, false, true, true));
 		roadList.add(new Road(world, 1350, 1250, false, true, true));
 
-		// inter1 road 3
+		// inter1 road 3 // num23
 
 		roadList.add(new Road(world, 1250, -150, false, false, true));
 		roadList.add(new Road(world, 1250, -350, false, false, true));
@@ -107,7 +107,7 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 1350, -950, false, true, true));
 		roadList.add(new Road(world, 1350, -1150, false, true, true));
 
-		// inter2 road4
+		// inter2 road4  // num35
 
 		roadList.add(new Road(world, 100, 1500, false, false, false));
 		roadList.add(new Road(world, 300, 1500, false, false, false));
@@ -122,10 +122,30 @@ public class GameScreen implements Screen {
 		roadList.add(new Road(world, 700, 1400, false, true, false));
 		roadList.add(new Road(world, 900, 1400, false, true, false));
 		roadList.add(new Road(world, 1100, 1400, false, true, false));
+		
+		// inter 3/0 road5 //num47
+		
+		roadList.add(new Road(world, -150, 250, false, false, true));
+		roadList.add(new Road(world, -150, 450, false, false, true));
+		roadList.add(new Road(world, -150, 650, false, false, true));
+		roadList.add(new Road(world, -150, 850, false, false, true));
+		roadList.add(new Road(world, -150, 1050, false, false, true));
+		roadList.add(new Road(world, -150, 1250, false, false, true));
+
+		roadList.add(new Road(world, -50, 250, false, true, true));
+		roadList.add(new Road(world, -50, 450, false, true, true));
+		roadList.add(new Road(world, -50, 650, false, true, true));
+		roadList.add(new Road(world, -50, 850, false, true, true));
+		roadList.add(new Road(world, -50, 1050, false, true, true));
+		roadList.add(new Road(world, -50, 1250, false, true, true));
+
+		// num59
 
 		interSectionList.add(new Intersection.Builder().x(1300).y(0).roadLeft(roadList.get(11)).roadUp(roadList.get(12))
 				.roadDown(roadList.get(30)).build());
-		interSectionList.add(new Intersection.Builder().x(1300).y(1400).roadLeft(roadList.get(47)).build());
+		interSectionList.add(new Intersection.Builder().x(1300).y(1400).roadDown(roadList.get(23)).roadLeft(roadList.get(47)).build());
+		interSectionList.add(new Intersection.Builder().x(-100).y(1400).roadRight(roadList.get(36)).roadDown(roadList.get(59)).build());
+		interSectionList.add(new Intersection.Builder().x(-100).y(0).roadRight(roadList.get(0)).roadUp(roadList.get(48)).build());
 	}
 
 	/**
@@ -222,7 +242,11 @@ public class GameScreen implements Screen {
 		drawDebug(shapeRenderer, roadList.get(11).getRectToPoly());
 		drawDebug(shapeRenderer, roadList.get(12).getRectToPoly());
 		drawDebug(shapeRenderer, roadList.get(30).getRectToPoly());
+		drawDebug(shapeRenderer, roadList.get(23).getRectToPoly());
 		drawDebug(shapeRenderer, roadList.get(47).getRectToPoly());
+		drawDebug(shapeRenderer, roadList.get(36).getRectToPoly());
+		drawDebug(shapeRenderer, roadList.get(59).getRectToPoly());
+		drawDebug(shapeRenderer, roadList.get(0).getRectToPoly());
 	}
 
 	void drawDebug(ShapeRenderer shapeRenderer, Polygon ca) {

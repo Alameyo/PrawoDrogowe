@@ -30,7 +30,14 @@ public abstract class Car extends Polygon {
 	protected float width;
 
 	private float polygonAdjust;
-
+	/**
+	 * 
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param angle
+	 * Constructor for car.
+	 */
 	public Car(World world, float x, float y, float angle) {
 		img = new Texture("autko1.png");
 		sprite = new Sprite(img);
@@ -58,7 +65,9 @@ public abstract class Car extends Polygon {
 		this.setRotation(angle);
 
 	}
-
+	/**
+	 * Update movement of car and it's sprite. Check for collisions with other objects.
+	 */
 	public void carUpdate() {
 		controlls();
 		velX = MathUtils.cos(MathUtils.degreesToRadians * angle) * speed * Gdx.graphics.getDeltaTime(); // X-component.

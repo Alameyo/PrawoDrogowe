@@ -65,8 +65,8 @@ public class MenuScreen implements Screen
 					textButton1.setText("Starting new game");
 					game.setScreen( new GameScreen(game));
 				}
-			});	
-	}
+			});	}
+	
 
 	@Override
 	public void show() {	
@@ -77,7 +77,7 @@ public class MenuScreen implements Screen
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act();
-		stage.draw();		
+		stage.draw();			
 	}
 
 	@Override
