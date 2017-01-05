@@ -83,27 +83,37 @@ public class AutonomusCar extends Car {
 
 	private boolean canIgoRight() {
 		if (angle == 0) {
-			if (currentIntersection.getRoadUp().isTaken() == true) {
+			try{
+				if (currentIntersection.getRoadUp().isTaken() == true) {
+			
 				canIgo = false;
 			} else {
+				canIgo = true;
+			}}catch(NullPointerException e){
 				canIgo = true;
 			}
 		} else if (angle == -90 || angle == 270) {
-			if (currentIntersection.getRoadRight().isTaken() == true) {
+			try{if (currentIntersection.getRoadRight().isTaken() == true) {
 				canIgo = false;
 			} else {
 				canIgo = true;
+			}}catch(NullPointerException e){
+				canIgo= true;
 			}
 		} else if (angle == -180 || angle == 180) {
-			if (currentIntersection.getRoadDown().isTaken() == true) {
+			try{if (currentIntersection.getRoadDown().isTaken() == true) {
 				canIgo = false;
 			} else {
+				canIgo = true;
+			}}catch(NullPointerException e){
 				canIgo = true;
 			}
 		} else if (angle == -270 || angle == 90) {
-			if (currentIntersection.getRoadLeft().isTaken() == true) {
+			try{if (currentIntersection.getRoadLeft().isTaken() == true) {
 				canIgo = false;
 			} else {
+				canIgo = true;
+			}}catch(NullPointerException e){
 				canIgo = true;
 			}
 		}
