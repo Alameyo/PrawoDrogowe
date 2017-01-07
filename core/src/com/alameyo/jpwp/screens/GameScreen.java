@@ -30,7 +30,7 @@ public class GameScreen implements Screen {
 
 	MainClass game;
 	SpriteBatch batch;
-	Car car, car2;
+//	Car car, car2;
 	Road road;
 	Intersection intersection;
 	World world;
@@ -39,7 +39,7 @@ public class GameScreen implements Screen {
 	OrthographicCamera cam;
 	ArrayList<Road> roadList;
 	ArrayList<Intersection> interSectionList;
-	LinkedList<AutonomusCar> autoCarList;
+	LinkedList<Car> carList;
 	// Intersector intersector;
 	private ShapeRenderer shapeRenderer;
 
@@ -50,10 +50,12 @@ public class GameScreen implements Screen {
 		world = new World(new Vector2(0f, 0f), true);
 		cam = new OrthographicCamera(1024, 800);
 		batch = new SpriteBatch();
-		car = new PlayerCar(world, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 90);
+		
 
-		autoCarList = new LinkedList<AutonomusCar>();
-		autoCarList.add(new AutonomusCar(world, 0, 0, 0));
+		carList = new LinkedList<Car>();
+		carList.add(new PlayerCar(world, Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 90));
+		carList.add(new AutonomusCar(world, 0, 0, 0));
+		
 		// intersector = new Intersector();
 		shapeRenderer = new ShapeRenderer();
 
@@ -156,14 +158,19 @@ public class GameScreen implements Screen {
 		cam.update();
 
 		batch.setProjectionMatrix(cam.combined);
-		cam.position.set(car.x + car.getSprite().getWidth() / 2, car.y + car.getSprite().getHeight(), 0);
-		car.carUpdate();
-		for (Intersection intersection : interSectionList) {
-			intersection.interUpdate(car);
-		}
-		for (AutonomusCar autoCar : autoCarList) {
-			autoCar.carUpdate(interSectionList);
-			autoCar.carUpdate();
+		cam.position.set(carList.getFirst().x + carList.getFirst().getSprite().getWidth() / 2, carList.getFirst().y + carList.getFirst().getSprite().getHeight(), 0);
+		
+		
+
+		//car.carUpdate(interSectionList);
+		
+		for (Car car : carList) {
+			car.carUpdate(interSectionList);
+			for (Intersection intersection : interSectionList) {
+				intersection.interUpdate(car);
+			}
+			
+		//	autoCar.carUpdate();
 		}
 		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT)) {
 			cam.zoom = 10.02f;
@@ -202,7 +209,6 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void dispose() {
-		car.dispose();
 		world.dispose();
 	}
 
@@ -225,9 +231,9 @@ public class GameScreen implements Screen {
 		for (Intersection intersection : interSectionList) {
 			intersection.getSprite().draw(batch);
 		}
-		car.getSprite().draw(batch);
+	//	car.getSprite().draw(batch);
 
-		for (AutonomusCar autoCar : autoCarList) {
+		for (Car autoCar : carList) {
 			autoCar.getSprite().draw(batch);
 		}
 
@@ -238,7 +244,7 @@ public class GameScreen implements Screen {
 		// drawDebug(shapeRenderer, car2);
 
 		batch.end();
-		drawDebug(shapeRenderer, car);
+		//drawDebug(shapeRenderer, car);
 		drawDebug(shapeRenderer, roadList.get(11).getRectToPoly());
 		drawDebug(shapeRenderer, roadList.get(12).getRectToPoly());
 		drawDebug(shapeRenderer, roadList.get(30).getRectToPoly());

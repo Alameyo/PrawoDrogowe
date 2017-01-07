@@ -1,5 +1,8 @@
 package com.alameyo.jpwp.models.vehicles;
 
+import java.util.ArrayList;
+
+import com.alameyo.jpwp.models.intersection.Intersection;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -68,7 +71,7 @@ public abstract class Car extends Polygon {
 	/**
 	 * Update movement of car and it's sprite. Check for collisions with other objects.
 	 */
-	public void carUpdate() {
+	public void carUpdate(ArrayList<Intersection> intersectionList) {
 		controlls();
 		velX = MathUtils.cos(MathUtils.degreesToRadians * angle) * speed * Gdx.graphics.getDeltaTime(); // X-component.
 		velY = MathUtils.sin(MathUtils.degreesToRadians * angle) * speed * Gdx.graphics.getDeltaTime(); // Y-component.
@@ -77,7 +80,7 @@ public abstract class Car extends Polygon {
 		y = y + velY;
 		this.setPosition(x, y);
 		this.setRotation(angle);
-		checkForCollision();
+		checkForCollision(intersectionList);
 
 		sprite.setPosition(x, y);
 		sprite.setRotation(angle);
@@ -85,7 +88,7 @@ public abstract class Car extends Polygon {
 
 	abstract protected void controlls();
 
-	protected void checkForCollision() {
+	protected void checkForCollision(ArrayList<Intersection> intersectionList) {
 
 	}
 

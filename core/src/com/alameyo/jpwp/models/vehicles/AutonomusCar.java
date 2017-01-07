@@ -85,7 +85,7 @@ public class AutonomusCar extends Car {
 		if (angle == 0) {
 			try {
 				if (currentIntersection.getRoadUp().isTaken() == true) {
-
+					
 					canIgo = false;
 				} else {
 					canIgo = true;
@@ -427,13 +427,13 @@ public class AutonomusCar extends Car {
 				}
 			}
 		}
-	return canIgo;
+		return canIgo;
 
 	}
 
-	public void carUpdate(ArrayList<Intersection> interSectionList) {
-		checkForCollision(interSectionList);
-	}
+	// public void carUpdate(ArrayList<Intersection> interSectionList) {
+	// checkForCollision(interSectionList);
+	// }
 
 	@Override
 	protected void controlls() {
@@ -441,23 +441,31 @@ public class AutonomusCar extends Car {
 			speed = 200;
 			if (haveNewWay == false) {
 
-				// myWay = rand.nextInt(3);
-				myWay = 0;
+				myWay = rand.nextInt(3);
+				//myWay = 0;
 				haveNewWay = true;
+				
 			}
 		} else if (normalWay == false) {
 
 			if (myWay == 0) {
 				if (canIgoLeft() == true) {
 					turnLeft();
+				} else {
+					speed = 20;
 				}
 			} else if (myWay == 1) {
 				if (canIgoRight() == true) {
 					turnRight();
+				} else {
+					speed = 20;
 				}
 			} else if (myWay == 2) {
-				if (canIgoAhead() == true)
+				if (canIgoAhead() == true) {
 					goAhead();
+				} else {
+					speed = 20;
+				}
 			}
 		}
 
@@ -578,5 +586,30 @@ public class AutonomusCar extends Car {
 			} catch (NullPointerException e) {
 			}
 		}
-	}
+	}/*
+	boolean doesNewExist(int way){
+		if(angle == 0){
+			if(way == 0){
+				try{
+					currentIntersection.getRoadUp().isTaken();
+					return true;
+				}catch(NullPointerException e){
+					return false;
+				}
+			}
+		}else if(angle ==-90 || angle ==270){
+			if(way == 0){
+				try{
+					currentIntersection.getRoadUp().isTaken();
+					return true;
+				}catch(NullPointerException e){
+					return false;
+				}
+			}
+		}else if(angle == )
+		
+		
+		
+		
+	}*/
 }
