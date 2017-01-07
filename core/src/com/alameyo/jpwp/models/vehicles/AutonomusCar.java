@@ -83,37 +83,44 @@ public class AutonomusCar extends Car {
 
 	private boolean canIgoRight() {
 		if (angle == 0) {
-			try{
+			try {
 				if (currentIntersection.getRoadUp().isTaken() == true) {
-			
-				canIgo = false;
-			} else {
-				canIgo = true;
-			}}catch(NullPointerException e){
+
+					canIgo = false;
+				} else {
+					canIgo = true;
+				}
+			} catch (NullPointerException e) {
 				canIgo = true;
 			}
 		} else if (angle == -90 || angle == 270) {
-			try{if (currentIntersection.getRoadRight().isTaken() == true) {
-				canIgo = false;
-			} else {
+			try {
+				if (currentIntersection.getRoadRight().isTaken() == true) {
+					canIgo = false;
+				} else {
+					canIgo = true;
+				}
+			} catch (NullPointerException e) {
 				canIgo = true;
-			}}catch(NullPointerException e){
-				canIgo= true;
 			}
 		} else if (angle == -180 || angle == 180) {
-			try{if (currentIntersection.getRoadDown().isTaken() == true) {
-				canIgo = false;
-			} else {
-				canIgo = true;
-			}}catch(NullPointerException e){
+			try {
+				if (currentIntersection.getRoadDown().isTaken() == true) {
+					canIgo = false;
+				} else {
+					canIgo = true;
+				}
+			} catch (NullPointerException e) {
 				canIgo = true;
 			}
 		} else if (angle == -270 || angle == 90) {
-			try{if (currentIntersection.getRoadLeft().isTaken() == true) {
-				canIgo = false;
-			} else {
-				canIgo = true;
-			}}catch(NullPointerException e){
+			try {
+				if (currentIntersection.getRoadLeft().isTaken() == true) {
+					canIgo = false;
+				} else {
+					canIgo = true;
+				}
+			} catch (NullPointerException e) {
 				canIgo = true;
 			}
 		}
@@ -127,52 +134,301 @@ public class AutonomusCar extends Car {
 	private boolean canIgoLeft() {
 
 		if (angle == 0) {
-		//	try {
+			try {
 				if (currentIntersection.getRoadUp().isTaken() == true || currentIntersection.getRoadDown().isTaken()
 						|| currentIntersection.getRoadRight().isTaken()) {
 					canIgo = false;
 				} else {
 					canIgo = true;
 				}
-		//	} catch (NullPointerException e) {
-			//	int wrong = 0;
-			//	try {
-			//		if (currentIntersection.getRoadUp().isTaken()) {
-
-				//	}
-				//} catch (NullPointerException e) {
-
-				//}
-		//	}
+			} catch (NullPointerException e) {
+				boolean up = false;
+				boolean down = false;
+				boolean right = false;
+				// check which roads exists
+				try {
+					currentIntersection.getRoadUp().isTaken();
+					up = true;
+				} catch (NullPointerException e2) {
+					up = false;
+					System.out.println("Górna nie istnieje");
+				}
+				try {
+					currentIntersection.getRoadDown().isTaken();
+					down = true;
+				} catch (NullPointerException e2) {
+					down = false;
+				}
+				try {
+					currentIntersection.getRoadRight().isTaken();
+					right = true;
+				} catch (NullPointerException e2) {
+					right = false;
+				}
+				if (up == true && down == true && right == false) {
+					if (currentIntersection.getRoadUp().isTaken() == true
+							|| currentIntersection.getRoadDown().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == true && down == false && right == true) {
+					if (currentIntersection.getRoadUp().isTaken() == true
+							|| currentIntersection.getRoadRight().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == false && down == true && right == true) {
+					if (currentIntersection.getRoadDown().isTaken() == true
+							|| currentIntersection.getRoadRight().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == false && down == false && right == true) {
+					if (currentIntersection.getRoadRight().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == false && down == true && right == false) {
+					if (currentIntersection.getRoadDown().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == true && down == false && right == false) {
+					if (currentIntersection.getRoadUp().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				}
+			}
 		} else if (angle == -90 || angle == 270) {
-			if (currentIntersection.getRoadLeft().isTaken() == true || currentIntersection.getRoadDown().isTaken()
-					|| currentIntersection.getRoadRight().isTaken()) {
-				canIgo = false;
-			} else {
-				canIgo = true;
+			try {
+				if (currentIntersection.getRoadLeft().isTaken() == true || currentIntersection.getRoadDown().isTaken()
+						|| currentIntersection.getRoadRight().isTaken()) {
+					canIgo = false;
+				} else {
+					canIgo = true;
+				}
+			} catch (NullPointerException e) {
+				boolean left = false;
+				boolean down = false;
+				boolean right = false;
+				// check which roads exists
+				try {
+					currentIntersection.getRoadLeft().isTaken();
+					left = true;
+				} catch (NullPointerException e2) {
+					left = false;
+					System.out.println("Lewo nie istnieje");
+				}
+				try {
+					currentIntersection.getRoadDown().isTaken();
+					down = true;
+				} catch (NullPointerException e2) {
+					down = false;
+				}
+				try {
+					currentIntersection.getRoadRight().isTaken();
+					right = true;
+				} catch (NullPointerException e2) {
+					right = false;
+				}
+				if (left == true && down == true && right == false) {
+					if (currentIntersection.getRoadLeft().isTaken() == true
+							|| currentIntersection.getRoadDown().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (left == true && down == false && right == true) {
+					if (currentIntersection.getRoadLeft().isTaken() == true
+							|| currentIntersection.getRoadRight().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (left == false && down == true && right == true) {
+					if (currentIntersection.getRoadDown().isTaken() == true
+							|| currentIntersection.getRoadRight().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (left == false && down == false && right == true) {
+					if (currentIntersection.getRoadRight().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (left == false && down == true && right == false) {
+					if (currentIntersection.getRoadDown().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (left == true && down == false && right == false) {
+					if (currentIntersection.getRoadLeft().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				}
 			}
 		} else if (angle == -180 || angle == 180) {
-			if (currentIntersection.getRoadUp().isTaken() == true || currentIntersection.getRoadDown().isTaken()
-					|| currentIntersection.getRoadLeft().isTaken()) {
-				canIgo = false;
-			} else {
-				canIgo = true;
+			try {
+				if (currentIntersection.getRoadUp().isTaken() == true || currentIntersection.getRoadDown().isTaken()
+						|| currentIntersection.getRoadLeft().isTaken()) {
+					canIgo = false;
+				} else {
+					canIgo = true;
+				}
+			} catch (NullPointerException e) {
+				boolean up = false;
+				boolean down = false;
+				boolean left = false;
+				// check which roads exists
+				try {
+					currentIntersection.getRoadUp().isTaken();
+					up = true;
+				} catch (NullPointerException e2) {
+					up = false;
+					System.out.println("Górna nie istnieje");
+				}
+				try {
+					currentIntersection.getRoadDown().isTaken();
+					down = true;
+				} catch (NullPointerException e2) {
+					down = false;
+				}
+				try {
+					currentIntersection.getRoadLeft().isTaken();
+					left = true;
+				} catch (NullPointerException e2) {
+					left = false;
+				}
+				if (up == true && down == true && left == false) {
+					if (currentIntersection.getRoadUp().isTaken() == true
+							|| currentIntersection.getRoadDown().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == true && down == false && left == true) {
+					if (currentIntersection.getRoadUp().isTaken() == true
+							|| currentIntersection.getRoadLeft().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == false && down == true && left == true) {
+					if (currentIntersection.getRoadDown().isTaken() == true
+							|| currentIntersection.getRoadLeft().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == false && down == false && left == true) {
+					if (currentIntersection.getRoadLeft().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == false && down == true && left == false) {
+					if (currentIntersection.getRoadDown().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == true && down == false && left == false) {
+					if (currentIntersection.getRoadUp().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				}
 			}
 		} else if (angle == -270 || angle == 90) {
-			if (currentIntersection.getRoadUp().isTaken() == true || currentIntersection.getRoadLeft().isTaken()
-					|| currentIntersection.getRoadRight().isTaken()) {
-				canIgo = false;
-			} else {
-				canIgo = true;
+			try {
+				if (currentIntersection.getRoadUp().isTaken() == true || currentIntersection.getRoadLeft().isTaken()
+						|| currentIntersection.getRoadRight().isTaken()) {
+					canIgo = false;
+				} else {
+					canIgo = true;
+				}
+			} catch (NullPointerException e) {
+
+				boolean up = false;
+				boolean right = false;
+				boolean left = false;
+				// check which roads exists
+				try {
+					currentIntersection.getRoadUp().isTaken();
+					up = true;
+				} catch (NullPointerException e2) {
+					up = false;
+					System.out.println("Górna nie istnieje");
+				}
+				try {
+					currentIntersection.getRoadRight().isTaken();
+					right = true;
+				} catch (NullPointerException e2) {
+					right = false;
+				}
+				try {
+					currentIntersection.getRoadLeft().isTaken();
+					left = true;
+				} catch (NullPointerException e2) {
+					left = false;
+				}
+				if (up == true && right == true && left == false) {
+					if (currentIntersection.getRoadUp().isTaken() == true
+							|| currentIntersection.getRoadRight().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == true && right == false && left == true) {
+					if (currentIntersection.getRoadUp().isTaken() == true
+							|| currentIntersection.getRoadLeft().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == false && right == true && left == true) {
+					if (currentIntersection.getRoadRight().isTaken() == true
+							|| currentIntersection.getRoadLeft().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == false && right == false && left == true) {
+					if (currentIntersection.getRoadLeft().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == false && right == true && left == false) {
+					if (currentIntersection.getRoadRight().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else if (up == true && right == false && left == false) {
+					if (currentIntersection.getRoadUp().isTaken()) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				}
 			}
-
 		}
+	return canIgo;
 
-		/*
-		 * if (roadLeft == true || roadRight == true || roadAhead == true) {
-		 * canIgo = false; } else { canIgo = true; }
-		 */
-		return canIgo;
 	}
 
 	public void carUpdate(ArrayList<Intersection> interSectionList) {
@@ -258,7 +514,7 @@ public class AutonomusCar extends Car {
 		System.out.println(angle + "   " + pastAngle);
 	}
 
-	private void checkForCollision(ArrayList<Intersection> intersectionList) {
+	protected void checkForCollision(ArrayList<Intersection> intersectionList) {
 		for (Intersection intersection : intersectionList) {
 			try {
 				if (normalWay == true
