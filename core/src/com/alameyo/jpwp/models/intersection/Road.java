@@ -6,6 +6,10 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 
+/**
+ * Droga.
+ *
+ */
 public class Road extends Rectangle{
 	
 	
@@ -13,16 +17,40 @@ public class Road extends Rectangle{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Sprite drogi.
+	 */
 	protected Sprite sprite;
+	/**
+	 * Tekstura drogi.
+	 */
 	protected Texture img;
+	/**
+	 * Zajêtoœæ drogi.
+	 */
 	boolean taken;
 	
-	
-	public float x;
-	public float y;
+	/**
+	 * Po³o¿enie drogi.
+	 */
+	public float x, y;
+	/**
+	 * Kat pod jakim droga jest ustawiona.
+	 */
 	private float angle;
+	/**
+	 * Wielok¹t drogi.
+	 */
 	Polygon rectToPoly;
-		
+	/**
+	 * Konstruktor drogi.
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param axisX
+	 * @param axisY
+	 * @param rotate
+	 */
 	public Road(World world, float x, float y, boolean axisX, boolean axisY, boolean rotate){
 		img = new Texture("blokDrogi.png");
 		

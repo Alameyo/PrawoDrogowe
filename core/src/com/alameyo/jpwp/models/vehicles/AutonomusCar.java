@@ -5,164 +5,471 @@ import java.util.LinkedList;
 import java.util.Random;
 
 import com.alameyo.jpwp.models.intersection.Intersection;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
+import com.alameyo.jpwp.models.intersection.Road;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class AutonomusCar extends Car {
-
+	/**
+	 * Kierunek dalszej jazdy.
+	 */
 	int myWay;
+	/**
+	 * Czy ma pierwszeñstwo i mogê jechaæ.
+	 */
 	boolean canIgo;
+	/**
+	 * Do losowania drogi
+	 */
 	Random rand;
 	boolean turning;
-	boolean go;
-	float pastAngle;
-	float pastX;
-	float pastY;
-
+	
+	/**
+	 * Czy ma obrany kierunek skrêtu na skrzy¿owaniu.
+	 */
+	boolean haveNewWay;
+	/**
+	 * Czy jest na skrzy¿owaniu czy w trasie.
+	 */
+	boolean normalWay;
+	/**
+	 * Po³o¿enie przed skrêtem.
+	 */
+	float pastAngle, pastX, pastY;
+	/**
+	 * Obecne skrzy¿owanie na którym siê znajduje.
+	 */
+	Intersection currentIntersection;
+	/**
+	 * Konstruktor wykorzystuj¹cy tak¿e superkonstruktor klasy z której dziedziczy.
+	 * @param world
+	 * @param x
+	 * @param y
+	 * @param angle
+	 */
 	public AutonomusCar(World world, float x, float y, float angle) {
 		super(world, x, y, angle);
 		rand = new Random();
-		speed = 30;
-		turning = false;
+		normalWay = true;
+		haveNewWay = false;
+		canIgo = false;
+
 	}
 
-	public void canIgoAhead(boolean roadLeft, boolean roadRight, boolean roadStraight) {
-		if (roadRight == true) {
-			canIgo = false;
-		} else {
-			canIgo = true;
-		}
-	}
+	/**
+	 * Check if car can go ahead through intersection.
+	 * Sprawdza czy mo¿e przejechaæ przez skrzy¿owanie na wprost.
+	 */
+	private boolean canIgoAhead() {
+		if (angle == 0) {
+			if (currentIntersection.getRoadRight() != null) {
+				
+				if (currentIntersection.getRoadDown() != null) {
+					if (currentIntersection.getRoadDown().isTaken() == true) {
 
-	public void canIgoRight(boolean roadLeft, boolean roadRight, boolean roadStraight) {
-		if (roadLeft == true) {
-			canIgo = false;
-		} else {
-			canIgo = true;
-		}
-	}
-
-	public void canIgoLeft(boolean roadLeft, boolean roadRight, boolean roadStraight, boolean leftSign,
-			boolean rightSign, boolean straightSign, boolean way) {
-		if (roadLeft == true || roadRight == true || roadStraight == true) {
-			canIgo = false;
-		} else {
-			canIgo = true;
-		}
-	}
-
-	public void carUpdate(ArrayList<Intersection> interSectionList) {
-		checkForCollision(interSectionList);
-	}
-
-	protected void controlls() {
-		if (turning == false) {
-			if (Gdx.input.isKeyPressed(Keys.K) == true) {
-				speed = 150;
-			} else if (Gdx.input.isKeyPressed(Keys.L) == true) {
-				pastAngle = angle;
-				myWay = 2;
-				turnRight();
-			} else if (Gdx.input.isKeyPressed(Keys.J) == true) {
-				pastAngle = angle;
-				myWay = 1;
-				turnLeft();
-			} else if (Gdx.input.isKeyPressed(Keys.I) == true) {
-				pastX = x;
-				pastY = y;
-				goAhead();
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else {
+					canIgo = true;
+				}
 			} else {
-				speed = 0;
+				canIgo = false;
+				haveNewWay = false;
 			}
-		} else if (myWay == 2) { // if myWay = 2
-			turnRight();
-		} else if (myWay == 1) {
-			turnLeft();
-		} else if (myWay == 0) {
-			goAhead();
+
+		} else if (angle == -90 || angle == 270) {
+			if (currentIntersection.getRoadDown() != null) {
+
+				if (currentIntersection.getRoadLeft() != null) {
+					if (currentIntersection.getRoadLeft().isTaken() == true) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else {
+					canIgo = true;
+				}
+			} else {
+				canIgo = false;
+				haveNewWay = false;
+			}
+		} else if (angle == -180 || angle == 180) {
+			if (currentIntersection.getRoadLeft() != null) {
+				if (currentIntersection.getRoadUp() != null) {
+					if (currentIntersection.getRoadUp().isTaken() == true) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} else {
+					canIgo = true;
+				}
+			} else {
+				canIgo = false;
+				haveNewWay = false;
+			}
+		} else if (angle == -270 || angle == 90) {
+			if (currentIntersection.getRoadUp() != null) {
+				if (currentIntersection.getRoadRight() != null) {
+					if (currentIntersection.getRoadRight().isTaken() == true) {
+						canIgo = false;
+
+					} else {
+						canIgo = true;
+					}
+				} else {
+					canIgo = true;
+
+				}
+			} else {
+				canIgo = false;
+				haveNewWay = false;
+			}
+		}
+		return canIgo;
+	}
+	/**
+	 * Sprawdza czy mo¿e przejechaæ przez skrzy¿owanie na prawo.
+	 * @return
+	 */
+	private boolean canIgoRight() {
+		if (angle == 0) {
+			if (currentIntersection.getRoadDown() != null) {
+				canIgo = true;
+
+			} else {
+				canIgo = false;
+				haveNewWay = false;
+			}
+		} else if (angle == -90 || angle == 270) {
+			if (currentIntersection.getRoadLeft() != null) {
+				canIgo = true;
+
+			} else {
+				canIgo = false;
+				haveNewWay = false;
+			}
+		} else if (angle == -180 || angle == 180) {
+			if (currentIntersection.getRoadUp() != null) {
+				canIgo = true;
+
+			} else {
+				canIgo = false;
+				haveNewWay = false;
+			}
+		} else if (angle == -270 || angle == 90) {
+			if (currentIntersection.getRoadRight() != null) {
+				canIgo = true;
+
+			} else {
+				canIgo = false;
+				haveNewWay = false;
+			}
+		}
+
+		/*
+		 * if (roadLeft == true) { canIgo = false; } else { canIgo = true; }
+		 */
+		return canIgo;
+
+	}
+	/**
+	 * Sprawdza czy mo¿e przejechaæ przez skrzy¿owanie na lewo.
+	 * @return
+	 */
+	private boolean canIgoLeft() {
+		if (angle == 0) {
+			if (currentIntersection.getRoadUp() != null) {
+
+				if (currentIntersection.getRoadRight() != null) {
+					if (currentIntersection.getRoadRight().isTaken() == false) {
+
+						if (currentIntersection.getRoadDown() != null) {
+							if (currentIntersection.getRoadDown().isTaken() == false) {
+								canIgo = true;
+							} else {
+								canIgo = false;
+							}
+						} else {
+							canIgo = true;
+						}
+					} else {
+						canIgo = false;
+					}
+				} else if (currentIntersection.getRoadDown() != null) {
+					if (currentIntersection.getRoadDown().isTaken() == false) {
+						canIgo = true;
+					} else {
+						canIgo = false;
+					}
+				}
+			} else {
+				haveNewWay = false;
+				canIgo = false;
+			}
+		} else if (angle == -90 || angle == 270) {
+			if (currentIntersection.getRoadRight() != null) {
+
+				if (currentIntersection.getRoadDown() != null) {
+					if (currentIntersection.getRoadDown().isTaken() == false) {
+
+						if (currentIntersection.getRoadLeft() != null) {
+							if (currentIntersection.getRoadLeft().isTaken() == false) {
+								canIgo = true;
+							} else {
+								canIgo = false;
+							}
+						} else {
+							canIgo = true;
+						}
+					} else {
+						canIgo = false;
+					}
+				} else if (currentIntersection.getRoadLeft() != null) {
+					if (currentIntersection.getRoadLeft().isTaken() == false) {
+						canIgo = true;
+					} else {
+						canIgo = false;
+					}
+				}
+			} else {
+				haveNewWay = false;
+				canIgo = false;
+			}
+
+		} else if (angle == -180 || angle == 180) {
+			if (currentIntersection.getRoadDown() != null) {
+
+				if (currentIntersection.getRoadUp() != null) {
+					if (currentIntersection.getRoadUp().isTaken() == false) {
+
+						if (currentIntersection.getRoadLeft() != null) {
+							if (currentIntersection.getRoadLeft().isTaken() == false) {
+								canIgo = true;
+							} else {
+								canIgo = false;
+							}
+						} else {
+							canIgo = true;
+						}
+					} else {
+						canIgo = false;
+					}
+				} else if (currentIntersection.getRoadLeft() != null) {
+					if (currentIntersection.getRoadLeft().isTaken() == false) {
+						canIgo = true;
+					} else {
+						canIgo = false;
+					}
+				}
+			} else {
+				haveNewWay = false;
+				canIgo = false;
+			}
+
+		} else if (angle == -270 || angle == 90) {
+			if (currentIntersection.getRoadLeft() != null) {
+
+				if (currentIntersection.getRoadRight() != null) {
+					if (currentIntersection.getRoadRight().isTaken() == false) {
+
+						if (currentIntersection.getRoadUp() != null) {
+							if (currentIntersection.getRoadUp().isTaken() == false) {
+								canIgo = true;
+							} else {
+								canIgo = false;
+							}
+						} else {
+							canIgo = true;
+						}
+					} else {
+						canIgo = false;
+					}
+				} else if (currentIntersection.getRoadUp() != null) {
+					if (currentIntersection.getRoadUp().isTaken() == false) {
+						canIgo = true;
+					} else {
+						canIgo = false;
+					}
+				}
+			} else {
+				haveNewWay = false;
+				canIgo = false;
+			}
+		}
+		return canIgo;
+
+	}
+	/**
+	 * Sterowanie bota wykorzystuj¹ce element losowy i skrypty odpowiednich manewrów.
+	 */
+	@Override
+	protected void controlls() {
+		if (normalWay == true) {
+			speed = 300;
+
+		} else if (normalWay == false) {
+
+			if (haveNewWay == false) {
+
+				myWay = rand.nextInt(3);
+				// myWay = 2;
+				haveNewWay = true;
+				
+
+			}
+			if (myWay == 0) {
+				if (canIgoLeft() == true) {
+					turnLeft();
+				} else {
+					speed = 0;
+				}
+			} else if (myWay == 2) {
+				if (canIgoRight() == true) {
+					turnRight();
+
+				} else {
+					speed = 0;
+				}
+			} else if (myWay == 1) {
+				if (canIgoAhead() == true) {
+					goAhead();
+				} else {
+					speed = 0;
+				}
+			}
 		}
 
 	}
-
-	private void turn(Intersection intersection) {
-		myWay = rand.nextInt(3);
-		if (myWay == 0 || angle == 0) {
-			canIgoAhead(intersection.getRoadLeft().isTaken(), intersection.getRoadRight().isTaken(),
-					intersection.getRoadDown().isTaken());
-		}
-	}
-
+	/**
+	 * Manewr przejazdu na wprost przez skrzy¿owanie.
+	 */
 	private void goAhead() {
 		turning = true;
-		speed = 200;
-		int dist = 500;
+
+		speed = 400;
+		int dist = 800;
 		if (x >= pastX + dist || x <= pastX - dist || y >= pastY + dist || y <= pastY - dist) {
 			turning = false;
+			normalWay = true;
+			haveNewWay = false;
 		}
 
 	}
-
+	/**
+	 * Manewr skrêtu w prawo.
+	 */
 	private void turnRight() {
 		turning = true;
-		angle = angle - 2;
+
 		speed = 250;
-		if (pastAngle - 90 == angle) {
-			turning = false;
+		int dist = 200;
+		wayLightRight.setTexture(img2);
+		wayLightRightFront.setTexture(img2);
+		if (x >= pastX + dist || x <= pastX - dist || y >= pastY + dist || y <= pastY - dist) {
+			angle = angle - 2;
+			if (pastAngle - 90 == angle) {
+				turning = false;
+				normalWay = true;
+				haveNewWay = false;
+				wayLightRight.setTexture(img);
+				wayLightRightFront.setTexture(img);
+				if (angle == -360) {
+					angle = 0;
+				}
+			}
 		}
-		System.out.println(angle + "   " + pastAngle);
-	}
 
+		
+	}
+	/**
+	 * Manewr skrêtu w lewo.
+	 */
 	private void turnLeft() {
-		turning = true;
-		angle = angle + 2;
-		speed = 450;
-		if (pastAngle + 90 == angle) {
-			turning = false;
-		}
-		System.out.println(angle + "   " + pastAngle);
-	}
 
-	private void checkForCollision(ArrayList<Intersection> intersectionList) {
+		turning = true;
+
+		speed = 430;
+		int dist = 200;
+		wayLightLeft.setTexture(img2);
+		wayLightLeftFront.setTexture(img2);
+		if (x >= pastX + dist || x <= pastX - dist || y >= pastY + dist || y <= pastY - dist) {
+			angle = angle + 2;
+			if (pastAngle + 90 == angle) {
+				turning = false;
+				normalWay = true;
+				haveNewWay = false;
+				wayLightLeft.setTexture(img);
+				wayLightLeftFront.setTexture(img);
+				if (angle == 360) {
+					angle = 0;
+
+				}
+			}
+		}
+		
+	}
+	/**
+	 * Sprawdza czy nast¹pi³a kolizja ze skrzy¿owaniem.
+	 */
+	protected void checkForCollision(LinkedList<Intersection> intersectionList) {
 		for (Intersection intersection : intersectionList) {
 			try {
-				if (Intersector.overlapConvexPolygons(this, intersection.getRoadRight().getRectToPoly())) {
-					System.out.println("Kolizja1");
-					intersection.getRoadRight().setTaken(true);
-				} else {
-					intersection.getRoadRight().setTaken(false);
+				if (normalWay == true
+						&& Intersector.overlapConvexPolygons(this, intersection.getRoadRight().getRectToPoly())) {
+					
+					normalWay = false;
+					rememberPositionBeforeTurning(intersection);
+					// regenerator
+					x = currentIntersection.getRoadLeft().x + 400;
+					y = currentIntersection.getRoadLeft().y + 100;
+
 				}
 			} catch (NullPointerException e) {
 			}
 			try {
-				if (Intersector.overlapConvexPolygons(this, intersection.getRoadLeft().getRectToPoly())) {
-					System.out.println("Kolizja2");
-					intersection.getRoadLeft().setTaken(true);
-				} else {
-					intersection.getRoadLeft().setTaken(false);
+				if (normalWay == true
+						&& Intersector.overlapConvexPolygons(this, intersection.getRoadLeft().getRectToPoly())) {
+					
+					normalWay = false;
+					rememberPositionBeforeTurning(intersection);
+					// regenerator
+					x = currentIntersection.getRoadLeft().x - 200;
+					y = currentIntersection.getRoadLeft().y;
 				}
 			} catch (NullPointerException e) {
 			}
 			try {
-				if (Intersector.overlapConvexPolygons(this, intersection.getRoadUp().getRectToPoly())) {
-					System.out.println("Kolizja3");
-					intersection.getRoadUp().setTaken(true);
-				} else {
-					intersection.getRoadUp().setTaken(false);
+				if (normalWay == true
+						&& Intersector.overlapConvexPolygons(this, intersection.getRoadUp().getRectToPoly())) {
+					
+					normalWay = false;
+					rememberPositionBeforeTurning(intersection);
 				}
 			} catch (NullPointerException e) {
 			}
 			try {
-				if (Intersector.overlapConvexPolygons(this, intersection.getRoadDown().getRectToPoly())) {
-					System.out.println("kolizja4");
-					intersection.getRoadDown().setTaken(true);
-				} else {
-					intersection.getRoadDown().setTaken(false);
+				if (normalWay == true
+						&& Intersector.overlapConvexPolygons(this, intersection.getRoadDown().getRectToPoly())) {
+					normalWay = false;
+					rememberPositionBeforeTurning(intersection);
+
 				}
 			} catch (NullPointerException e) {
 			}
 		}
+	}
+	/**
+	 * Zapamiêtuje pozycjê przed manewrem jako punkt odniesienia.
+	 * @param intersection
+	 */
+	private void rememberPositionBeforeTurning(Intersection intersection) {
+		pastX = x;
+		pastY = y;
+		pastAngle = angle;
+		currentIntersection = intersection;
+
 	}
 }

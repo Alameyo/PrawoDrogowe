@@ -3,12 +3,14 @@ package com.alameyo.jpwp.screens;
 import com.alameyo.jpwp.MainClass;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -16,20 +18,56 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 /**
+ * Menu g³ówne.
  * Game main menu
  */
 public class MenuScreen implements Screen
 	{
-		private MainClass game;		
+		/**
+		 * Klasa main.
+		 */
+		private MainClass game;
+		/**
+		 * Skórka dla przycisków.
+		 */
 		private Skin skin;
+		/*
+		 * Scene wykorzystana do narysowania menu.
+		 */
 		private Stage stage;
 		
-	public	MenuScreen(MainClass game){
+		/**
+		 * Font do wyniku.
+		 */
+		private BitmapFont font;
+		/**
+		 * Batch do wyniku.
+		 */
+		private SpriteBatch batch;
+		/**
+		 * Wynik.
+		 */
+		private String score;
+		/**
+		 * Konstruktor menu.
+		 * @param game
+		 */
+			public	MenuScreen(MainClass game){
 		this.game = game;
 		create();
 		}
-
-		private void create(){		
+		/**
+		 * Metoda wywo³ywana przez konstruktor.
+		 */
+		private void create(){	
+			try{
+			FileHandle file = Gdx.files.external("Score.txt");
+			score = file.readString();
+			}catch(Exception e){
+				score = "0";
+			}
+			batch = new SpriteBatch();
+			font = new BitmapFont();
 			stage = new Stage();
 			Gdx.input.setInputProcessor(stage);	
 			skin = new Skin();
@@ -65,37 +103,56 @@ public class MenuScreen implements Screen
 					textButton1.setText("Starting new game");
 					game.setScreen( new GameScreen(game));
 				}
-			});	
-	}
-
+			});	}
+	
+		/**
+		 * 
+		 */
 	@Override
 	public void show() {	
 	}
+	/**
+	 * Renderowanie obrazu.
+	 */
 	@Override
 	public void render(float delta) {
 		//start.show();
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act();
-		stage.draw();		
+		stage.draw();
+		batch.begin();
+		font.getData().setScale(3);
+		font.draw(batch, "Wynik: " +score, 300, 600);
+		batch.end();
 	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public void resize(int width, int height) {		
 	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public void pause() {
 	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public void resume() {
 	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public void hide() {
 	}
-
+	/**
+	 * 
+	 */
 	@Override
 	public void dispose() {
 	}
