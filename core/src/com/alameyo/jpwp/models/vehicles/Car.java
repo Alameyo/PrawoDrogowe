@@ -1,6 +1,7 @@
 package com.alameyo.jpwp.models.vehicles;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.alameyo.jpwp.models.intersection.Intersection;
 import com.badlogic.gdx.Gdx;
@@ -11,7 +12,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
- *  Abstract class for cars
+ * Abstract class for cars
  *
  */
 public abstract class Car extends Polygon {
@@ -35,13 +36,14 @@ public abstract class Car extends Polygon {
 	protected float width;
 
 	private float polygonAdjust;
+
 	/**
 	 * 
 	 * @param world
 	 * @param x
 	 * @param y
 	 * @param angle
-	 * Constructor for car.
+	 *            Constructor for car.
 	 */
 	public Car(World world, float x, float y, float angle) {
 		img = new Texture("autko1.png");
@@ -56,18 +58,17 @@ public abstract class Car extends Polygon {
 		// x = Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2;
 		// y = Gdx.graphics.getHeight() / 2 - sprite.getHeight() / 2;
 		sprite.setPosition(x, y);
-		
-		wayLightLeft.setPosition(x+10, y+20);
+
+		wayLightLeft.setPosition(x + 10, y + 20);
 		wayLightLeft.setRotation(angle);
-		
-		wayLightRight.setPosition(x-10, y-10);
+
+		wayLightRight.setPosition(x - 10, y - 10);
 		wayLightRight.setRotation(angle);
-		
-		
-		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
-		wayLightLeft.setOrigin(sprite.getWidth()/2+10, sprite.getHeight()/2-60);
-		wayLightRight.setOrigin(sprite.getWidth()/2+10, sprite.getHeight()/2+5);
-		
+
+		sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
+		wayLightLeft.setOrigin(sprite.getWidth() / 2 + 10, sprite.getHeight() / 2 - 60);
+		wayLightRight.setOrigin(sprite.getWidth() / 2 + 10, sprite.getHeight() / 2 + 5);
+
 		this.setPosition(x, y);
 		this.setOrigin(x, y);
 
@@ -78,24 +79,29 @@ public abstract class Car extends Polygon {
 		velX = 0;
 		velY = 0;
 		topSpeed = 450f;
-		//angle = 90;
-		polygonAdjust = 5;
-		this.setVertices(new float[] { 0, 0, 0, 0 + sprite.getHeight(), 0 + sprite.getWidth(), 0 + sprite.getHeight(),
-				0 + sprite.getWidth(), 0 });
-		this.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
+		// angle = 90;
+		polygonAdjust = 3;
+		this.setVertices(new float[] { 0 + polygonAdjust, 0 + polygonAdjust, 0 + polygonAdjust,
+				0 + sprite.getHeight() - polygonAdjust, 0 + sprite.getWidth() - polygonAdjust,
+				0 + sprite.getHeight() - polygonAdjust, 0 + sprite.getWidth() - polygonAdjust, 0 + polygonAdjust });
+		this.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
 		this.setRotation(angle);
 
 	}
+
 	public Sprite getWayLightLeft() {
 		return wayLightLeft;
 	}
+
 	public Sprite getWayLightRight() {
 		return wayLightRight;
 	}
+
 	/**
-	 * Update movement of car and it's sprite. Check for collisions with other objects.
+	 * Update movement of car and it's sprite. Check for collisions with other
+	 * objects.
 	 */
-	public void carUpdate(ArrayList<Intersection> intersectionList) {
+	public void carUpdate(LinkedList<Intersection> intersectionList) {
 		controlls();
 		velX = MathUtils.cos(MathUtils.degreesToRadians * angle) * speed * Gdx.graphics.getDeltaTime(); // X-component.
 		velY = MathUtils.sin(MathUtils.degreesToRadians * angle) * speed * Gdx.graphics.getDeltaTime(); // Y-component.
@@ -108,19 +114,17 @@ public abstract class Car extends Polygon {
 
 		sprite.setPosition(x, y);
 		sprite.setRotation(angle);
-		
-		wayLightLeft.setPosition(x-10, y+60);
+
+		wayLightLeft.setPosition(x - 10, y + 60);
 		wayLightLeft.setRotation(angle);
-		
-		wayLightRight.setPosition(x-10, y-5);
+
+		wayLightRight.setPosition(x - 10, y - 5);
 		wayLightRight.setRotation(angle);
 	}
 
 	abstract protected void controlls();
 
-	protected void checkForCollision(ArrayList<Intersection> intersectionList) {
-		
-	}
+	abstract protected void checkForCollision(LinkedList<Intersection> intersectionList) ;
 
 	public void dispose() {
 		img.dispose();

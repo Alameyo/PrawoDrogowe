@@ -1,6 +1,7 @@
 package com.alameyo.jpwp.models.vehicles;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 import com.alameyo.jpwp.models.intersection.Intersection;
@@ -29,6 +30,7 @@ public class AutonomusCar extends Car {
 		rand = new Random();
 		normalWay = true;
 		haveNewWay = false;
+		canIgo = false;
 
 	}
 
@@ -38,43 +40,79 @@ public class AutonomusCar extends Car {
 	private boolean canIgoAhead() {
 		if (angle == 0) {
 			try {
-				if (currentIntersection.getRoadDown().isTaken() == true) {
-					canIgo = false;
-				} else {
+				currentIntersection.getRoadRight().isTaken();
+				System.out.println("znalaz³o prawo droge");
+				try {
+					if (currentIntersection.getRoadDown().isTaken() == true) {
+
+						canIgo = false;
+					} else {
+						canIgo = true;
+						System.out.println("drogadolna niezajeta");
+					}
+				} catch (NullPointerException e) {
 					canIgo = true;
+					System.out.println("droga dolnanieistnieje");
 				}
-			} catch (NullPointerException e) {
-				canIgo = true;
+			} catch (NullPointerException e2) {
+				canIgo = false;
+				haveNewWay = false;
 			}
+
 		} else if (angle == -90 || angle == 270) {
 			try {
-				if (currentIntersection.getRoadLeft().isTaken() == true) {
-					canIgo = false;
-				} else {
+				currentIntersection.getRoadDown().isTaken();
+				try {
+					if (currentIntersection.getRoadLeft().isTaken() == true) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} catch (NullPointerException e) {
 					canIgo = true;
 				}
-			} catch (NullPointerException e) {
-				canIgo = true;
+			} catch (NullPointerException e2) {
+				canIgo = false;
+				haveNewWay = false;
 			}
 		} else if (angle == -180 || angle == 180) {
 			try {
-				if (currentIntersection.getRoadUp().isTaken() == true) {
-					canIgo = false;
-				} else {
+				currentIntersection.getRoadLeft().isTaken();
+				try {
+					if (currentIntersection.getRoadUp().isTaken() == true) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} catch (NullPointerException e) {
 					canIgo = true;
 				}
-			} catch (NullPointerException e) {
-				canIgo = true;
+			} catch (NullPointerException e2) {
+				canIgo = false;
+				System.out.println("Co jest nie tak");
+				haveNewWay = false;
 			}
 		} else if (angle == -270 || angle == 90) {
+			System.out.println("sprawdzam");
 			try {
-				if (currentIntersection.getRoadRight().isTaken() == true) {
-					canIgo = false;
-				} else {
+				currentIntersection.getRoadUp().isTaken();
+				System.out.println("jest górna droga");
+
+				try {
+					if (currentIntersection.getRoadRight().isTaken() == true) {
+						canIgo = false;
+
+					} else {
+						canIgo = true;
+					}
+				} catch (NullPointerException e) {
 					canIgo = true;
+
 				}
-			} catch (NullPointerException e) {
-				canIgo = true;
+			} catch (NullPointerException e2) {
+				canIgo = false;
+				haveNewWay = false;
+				System.out.println("niema górnej drogi");
 			}
 		}
 		/*
@@ -156,8 +194,9 @@ public class AutonomusCar extends Car {
 
 		if (angle == 0) {
 			try {
-				if (currentIntersection.getRoadUp().isTaken() == true || currentIntersection.getRoadDown().isTaken()
-						|| currentIntersection.getRoadRight().isTaken()) {
+				if (currentIntersection.getRoadUp().isTaken() == true
+						|| currentIntersection.getRoadDown().isTaken() == true
+						|| currentIntersection.getRoadRight().isTaken() == true) {
 					canIgo = false;
 				} else {
 					canIgo = true;
@@ -188,39 +227,39 @@ public class AutonomusCar extends Car {
 				}
 				if (up == true && down == true && right == false) {
 					if (currentIntersection.getRoadUp().isTaken() == true
-							|| currentIntersection.getRoadDown().isTaken()) {
+							|| currentIntersection.getRoadDown().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == true && down == false && right == true) {
 					if (currentIntersection.getRoadUp().isTaken() == true
-							|| currentIntersection.getRoadRight().isTaken()) {
+							|| currentIntersection.getRoadRight().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == false && down == true && right == true) {
 					if (currentIntersection.getRoadDown().isTaken() == true
-							|| currentIntersection.getRoadRight().isTaken()) {
+							|| currentIntersection.getRoadRight().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == false && down == false && right == true) {
-					if (currentIntersection.getRoadRight().isTaken()) {
+					if (currentIntersection.getRoadRight().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == false && down == true && right == false) {
-					if (currentIntersection.getRoadDown().isTaken()) {
+					if (currentIntersection.getRoadDown().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == true && down == false && right == false) {
-					if (currentIntersection.getRoadUp().isTaken()) {
+					if (currentIntersection.getRoadUp().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
@@ -229,8 +268,9 @@ public class AutonomusCar extends Car {
 			}
 		} else if (angle == -90 || angle == 270) {
 			try {
-				if (currentIntersection.getRoadLeft().isTaken() == true || currentIntersection.getRoadDown().isTaken()
-						|| currentIntersection.getRoadRight().isTaken()) {
+				if (currentIntersection.getRoadLeft().isTaken() == true
+						|| currentIntersection.getRoadDown().isTaken() == true
+						|| currentIntersection.getRoadRight().isTaken() == true) {
 					canIgo = false;
 				} else {
 					canIgo = true;
@@ -261,39 +301,39 @@ public class AutonomusCar extends Car {
 				}
 				if (left == true && down == true && right == false) {
 					if (currentIntersection.getRoadLeft().isTaken() == true
-							|| currentIntersection.getRoadDown().isTaken()) {
+							|| currentIntersection.getRoadDown().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (left == true && down == false && right == true) {
 					if (currentIntersection.getRoadLeft().isTaken() == true
-							|| currentIntersection.getRoadRight().isTaken()) {
+							|| currentIntersection.getRoadRight().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (left == false && down == true && right == true) {
 					if (currentIntersection.getRoadDown().isTaken() == true
-							|| currentIntersection.getRoadRight().isTaken()) {
+							|| currentIntersection.getRoadRight().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (left == false && down == false && right == true) {
-					if (currentIntersection.getRoadRight().isTaken()) {
+					if (currentIntersection.getRoadRight().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (left == false && down == true && right == false) {
-					if (currentIntersection.getRoadDown().isTaken()) {
+					if (currentIntersection.getRoadDown().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (left == true && down == false && right == false) {
-					if (currentIntersection.getRoadLeft().isTaken()) {
+					if (currentIntersection.getRoadLeft().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
@@ -302,8 +342,9 @@ public class AutonomusCar extends Car {
 			}
 		} else if (angle == -180 || angle == 180) {
 			try {
-				if (currentIntersection.getRoadUp().isTaken() == true || currentIntersection.getRoadDown().isTaken()
-						|| currentIntersection.getRoadLeft().isTaken()) {
+				if (currentIntersection.getRoadUp().isTaken() == true
+						|| currentIntersection.getRoadDown().isTaken() == true
+						|| currentIntersection.getRoadLeft().isTaken() == true) {
 					canIgo = false;
 				} else {
 					canIgo = true;
@@ -334,39 +375,39 @@ public class AutonomusCar extends Car {
 				}
 				if (up == true && down == true && left == false) {
 					if (currentIntersection.getRoadUp().isTaken() == true
-							|| currentIntersection.getRoadDown().isTaken()) {
+							|| currentIntersection.getRoadDown().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == true && down == false && left == true) {
 					if (currentIntersection.getRoadUp().isTaken() == true
-							|| currentIntersection.getRoadLeft().isTaken()) {
+							|| currentIntersection.getRoadLeft().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == false && down == true && left == true) {
 					if (currentIntersection.getRoadDown().isTaken() == true
-							|| currentIntersection.getRoadLeft().isTaken()) {
+							|| currentIntersection.getRoadLeft().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == false && down == false && left == true) {
-					if (currentIntersection.getRoadLeft().isTaken()) {
+					if (currentIntersection.getRoadLeft().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == false && down == true && left == false) {
-					if (currentIntersection.getRoadDown().isTaken()) {
+					if (currentIntersection.getRoadDown().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == true && down == false && left == false) {
-					if (currentIntersection.getRoadUp().isTaken()) {
+					if (currentIntersection.getRoadUp().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
@@ -375,8 +416,9 @@ public class AutonomusCar extends Car {
 			}
 		} else if (angle == -270 || angle == 90) {
 			try {
-				if (currentIntersection.getRoadUp().isTaken() == true || currentIntersection.getRoadLeft().isTaken()
-						|| currentIntersection.getRoadRight().isTaken()) {
+				if (currentIntersection.getRoadUp().isTaken() == true
+						|| currentIntersection.getRoadLeft().isTaken() == true
+						|| currentIntersection.getRoadRight().isTaken() == true) {
 					canIgo = false;
 				} else {
 					canIgo = true;
@@ -408,39 +450,39 @@ public class AutonomusCar extends Car {
 				}
 				if (up == true && right == true && left == false) {
 					if (currentIntersection.getRoadUp().isTaken() == true
-							|| currentIntersection.getRoadRight().isTaken()) {
+							|| currentIntersection.getRoadRight().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == true && right == false && left == true) {
 					if (currentIntersection.getRoadUp().isTaken() == true
-							|| currentIntersection.getRoadLeft().isTaken()) {
+							|| currentIntersection.getRoadLeft().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == false && right == true && left == true) {
 					if (currentIntersection.getRoadRight().isTaken() == true
-							|| currentIntersection.getRoadLeft().isTaken()) {
+							|| currentIntersection.getRoadLeft().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == false && right == false && left == true) {
-					if (currentIntersection.getRoadLeft().isTaken()) {
+					if (currentIntersection.getRoadLeft().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == false && right == true && left == false) {
-					if (currentIntersection.getRoadRight().isTaken()) {
+					if (currentIntersection.getRoadRight().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
 				} else if (up == true && right == false && left == false) {
-					if (currentIntersection.getRoadUp().isTaken()) {
+					if (currentIntersection.getRoadUp().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
@@ -458,34 +500,46 @@ public class AutonomusCar extends Car {
 
 	@Override
 	protected void controlls() {
+		try {
+			System.out.println("On da way" + currentIntersection.getRoadLeft().isTaken()
+					+ currentIntersection.getRoadRight().isTaken() + currentIntersection.getRoadUp().isTaken()
+					+ currentIntersection.getRoadDown().isTaken());
+		} catch (NullPointerException e) {
+		}
 		if (normalWay == true) {
-			speed = 200;
-			if (haveNewWay == false) {
+			speed = 300;
 
-				myWay = rand.nextInt(3);
-				// myWay = 0;
-				haveNewWay = true;
-
-			}
 		} else if (normalWay == false) {
 
+			if (haveNewWay == false) {
+
+				myWay = rand.nextInt(2);
+				// myWay = 2;
+				haveNewWay = true;
+				System.out.println("rand" + myWay);
+
+			}
 			if (myWay == 0) {
 				if (canIgoLeft() == true) {
 					turnLeft();
 				} else {
-					speed = 20;
-				}
-			} else if (myWay == 1) {
-				if (canIgoRight() == true) {
-					turnRight();
-				} else {
-					speed = 20;
+					// haveNewWay = false;
+					speed = 0;
 				}
 			} else if (myWay == 2) {
+				if (canIgoRight() == true) {
+					turnRight();
+
+				} else {
+					// haveNewWay = false;
+					speed = 0;
+				}
+			} else if (myWay == 1) {
 				if (canIgoAhead() == true) {
 					goAhead();
 				} else {
-					speed = 20;
+					// haveNewWay = false;
+					speed = 0;
 				}
 			}
 		}
@@ -494,8 +548,9 @@ public class AutonomusCar extends Car {
 
 	private void goAhead() {
 		turning = true;
-		speed = 200;
-		int dist = 500;
+
+		speed = 400;
+		int dist = 800;
 		if (x >= pastX + dist || x <= pastX - dist || y >= pastY + dist || y <= pastY - dist) {
 			turning = false;
 			normalWay = true;
@@ -530,7 +585,7 @@ public class AutonomusCar extends Car {
 
 		turning = true;
 
-		speed = 450;
+		speed = 430;
 		int dist = 200;
 		wayLightLeft.setTexture(img2);
 		if (x >= pastX + dist || x <= pastX - dist || y >= pastY + dist || y <= pastY - dist) {
@@ -542,25 +597,26 @@ public class AutonomusCar extends Car {
 				wayLightLeft.setTexture(img);
 				if (angle == 360) {
 					angle = 0;
-					
+
 				}
 			}
 		}
 		System.out.println(angle + "   " + pastAngle);
 	}
 
-	protected void checkForCollision(ArrayList<Intersection> intersectionList) {
+	protected void checkForCollision(LinkedList<Intersection> intersectionList) {
 		for (Intersection intersection : intersectionList) {
 			try {
 				if (normalWay == true
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadRight().getRectToPoly())) {
 					System.out.println("Kolizja1");
 					normalWay = false;
-					pastX = x;
-					pastY = y;
-					pastAngle = angle;
-					currentIntersection = intersection;
-				} 
+					rememberPositionBeforeTurning(intersection);
+					// regenerator
+					x = currentIntersection.getRoadLeft().x + 400;
+					y = currentIntersection.getRoadLeft().y + 100;
+
+				}
 			} catch (NullPointerException e) {
 			}
 			try {
@@ -568,11 +624,11 @@ public class AutonomusCar extends Car {
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadLeft().getRectToPoly())) {
 					System.out.println("Kolizja2");
 					normalWay = false;
-					pastX = x;
-					pastY = y;
-					pastAngle = angle;
-					currentIntersection = intersection;
-				} 
+					rememberPositionBeforeTurning(intersection);
+					// regenerator
+					x = currentIntersection.getRoadLeft().x - 200;
+					y = currentIntersection.getRoadLeft().y;
+				}
 			} catch (NullPointerException e) {
 			}
 			try {
@@ -580,11 +636,9 @@ public class AutonomusCar extends Car {
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadUp().getRectToPoly())) {
 					System.out.println("Kolizja3");
 					normalWay = false;
-					pastX = x;
-					pastY = y;
-					pastAngle = angle;
-					currentIntersection = intersection;
-				} 
+					rememberPositionBeforeTurning(intersection);
+
+				}
 			} catch (NullPointerException e) {
 			}
 			try {
@@ -592,26 +646,19 @@ public class AutonomusCar extends Car {
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadDown().getRectToPoly())) {
 					System.out.println("kolizja4");
 					normalWay = false;
-					pastX = x;
-					pastY = y;
-					pastAngle = angle;
-					currentIntersection = intersection;
-				} 
+					rememberPositionBeforeTurning(intersection);
+
+				}
 			} catch (NullPointerException e) {
 			}
 		}
 	}
-	/*
-	 * boolean doesNewExist(int way){ if(angle == 0){ if(way == 0){ try{
-	 * currentIntersection.getRoadUp().isTaken(); return true;
-	 * }catch(NullPointerException e){ return false; } } }else if(angle ==-90 ||
-	 * angle ==270){ if(way == 0){ try{
-	 * currentIntersection.getRoadUp().isTaken(); return true;
-	 * }catch(NullPointerException e){ return false; } } }else if(angle == )
-	 * 
-	 * 
-	 * 
-	 * 
-	 * }
-	 */
+
+	private void rememberPositionBeforeTurning(Intersection intersection) {
+		pastX = x;
+		pastY = y;
+		pastAngle = angle;
+		currentIntersection = intersection;
+
+	}
 }

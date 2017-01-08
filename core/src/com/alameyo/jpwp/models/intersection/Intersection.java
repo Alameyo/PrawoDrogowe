@@ -17,10 +17,6 @@ public class Intersection extends Rectangle {
 	protected Road roadRight;
 	protected Road roadUp;
 	protected Road roadDown;
-	protected boolean leftTaken;
-	protected boolean rightTaken;
-	protected boolean upTaken;
-	protected boolean downTaken;
 
 	protected boolean taken;
 
@@ -73,6 +69,7 @@ public class Intersection extends Rectangle {
 				roadDown.setTaken( roadListener(roadDown, car));
 			} catch (NullPointerException e) {
 			}
+			
 		}
 	}
 
@@ -86,75 +83,14 @@ public class Intersection extends Rectangle {
 		boolean roadTaken;
 		if (Intersector.overlapConvexPolygons(road.rectToPoly, car)) {
 			roadTaken = true;
-			System.out.println("Na drodze");
+			//road.setTaken(roadTaken);
+			
 		} else {
 			roadTaken = false;
+			//road.setTaken(roadTaken);
 		}
+		//System.out.println("Na drodze" + roadUp.isTaken() + roadLeft.isTaken() + roadDown.isTaken() + roadRight.isTaken());
 		return roadTaken;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isLeftTaken() {
-		return leftTaken;
-	}
-
-	/**
-	 * 
-	 * @param leftTaken
-	 */
-	public void setLeftTaken(boolean leftTaken) {
-		this.leftTaken = leftTaken;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isRightTaken() {
-		return rightTaken;
-	}
-
-	/**
-	 * 
-	 * @param rightTaken
-	 */
-	public void setRightTaken(boolean rightTaken) {
-		this.rightTaken = rightTaken;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isUpTaken() {
-		return upTaken;
-	}
-
-	/**
-	 * 
-	 * @param upTaken
-	 */
-	public void setUpTaken(boolean upTaken) {
-		this.upTaken = upTaken;
-	}
-
-	/**
-	 * 
-	 * @return
-	 */
-	public boolean isDownTaken() {
-		return downTaken;
-	}
-
-	/**
-	 * 
-	 * @param downTaken
-	 */
-	public void setDownTaken(boolean downTaken) {
-		this.downTaken = downTaken;
 	}
 
 	/**
