@@ -1,6 +1,5 @@
 package com.alameyo.jpwp.models.intersection;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.alameyo.jpwp.models.vehicles.Car;
@@ -8,28 +7,41 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-
+/**
+ * 
+ * Skrzy¿owanie.
+ *
+ */
 public class Intersection extends Rectangle {
 
 	private static final long serialVersionUID = 1L;
-	// road logic
-	protected Road roadLeft;
-	protected Road roadRight;
-	protected Road roadUp;
-	protected Road roadDown;
 
+	/**
+	 * Drogi nale¿¹ce do skrzy¿owania.
+	 */
+	protected Road roadLeft, roadRight, roadUp, roadDown;
+	/**
+	 * Zajêtoœæ drogi.
+	 */
 	protected boolean taken;
-
-	public float x;
-	public float y;
-
+	/**
+	 * Po³o¿enie.
+	 */
+	public float x,y;
+	/**
+	 * Sprite skrzy¿owania.
+	 */
 	protected Sprite sprite;
+	/**
+	 * Tekstura skrzy¿owania.
+	 */
 	protected Texture img;
 
 	/**
-	 * 
+	 * Constructor for Intersection.
+	 * Konstruktor dla skrzy¿owania.
 	 * @param builder
-	 *            Constructor for Intersection.
+	 *     
 	 */
 	public Intersection(Builder builder) {
 
@@ -47,9 +59,10 @@ public class Intersection extends Rectangle {
 
 	/**
 	 * 
+	 * Update information about roads of intersection with car on
+	 * them.
+	 * Aktualizuje informacje o po³o¿eniu pojazdów na skrzy¿owaniu.
 	 * @param car
-	 *            Update information about roads of intersection with car on
-	 *            them.
 	 */
 	public void interUpdate(LinkedList<Car> carList) {
 		for (Car car : carList) {
@@ -75,24 +88,30 @@ public class Intersection extends Rectangle {
 			}
 		}
 	}
-
+	/**
+	 * Resetuje informacje o skrzy¿owaniu.
+	 */
 	public void reset() {
 		if (roadLeft != null) {
 			roadLeft.setTaken(false);
 		}
 		if (roadRight != null) {
-		roadRight.setTaken(false);}
+			roadRight.setTaken(false);
+		}
 		if (roadUp != null) {
-		roadUp.setTaken(false);}
+			roadUp.setTaken(false);
+		}
 		if (roadDown != null) {
-		roadDown.setTaken(false);
-	}}
+			roadDown.setTaken(false);
+		}
+	}
 
 	/**
-	 * 
+	 * Nas³uchuje kolizji dróg z samochodami.
+	 * Listening for collision with car.
 	 * @param road
 	 * @param car
-	 * @return Listening for collision with car.
+	 * @return 
 	 */
 	boolean roadListener(Road road, Car car) {
 		boolean roadTaken;
@@ -102,10 +121,7 @@ public class Intersection extends Rectangle {
 
 		} else {
 			roadTaken = false;
-			// road.setTaken(roadTaken);
 		}
-		// System.out.println("Na drodze" + roadUp.isTaken() +
-		// roadLeft.isTaken() + roadDown.isTaken() + roadRight.isTaken());
 		return roadTaken;
 	}
 
@@ -142,6 +158,7 @@ public class Intersection extends Rectangle {
 	}
 
 	/**
+	 * Klasa wewnêtrzna wykorzystuj¹ca wzorzec projektowy budowniczy.
 	 * 
 	 * Inner class with builder design pattern for construction of the
 	 * intersection.
