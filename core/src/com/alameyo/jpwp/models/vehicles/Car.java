@@ -18,7 +18,9 @@ public abstract class Car extends Polygon {
 
 	// public Body body;
 	protected Sprite sprite;
-	protected Texture img;
+	protected Sprite wayLightLeft;
+	protected Sprite wayLightRight;
+	protected Texture img, img2;
 	public float x;
 	public float y;
 	protected float speed;
@@ -44,11 +46,28 @@ public abstract class Car extends Polygon {
 	public Car(World world, float x, float y, float angle) {
 		img = new Texture("autko1.png");
 		sprite = new Sprite(img);
+		img = new Texture("noWayLight.png");
+		img2 = new Texture("WayLight.png");
+		wayLightRight = new Sprite(img);
+		wayLightLeft = new Sprite(img);
 		this.x = x;
 		this.y = y;
+		this.angle = angle;
 		// x = Gdx.graphics.getWidth() / 2 - sprite.getWidth() / 2;
 		// y = Gdx.graphics.getHeight() / 2 - sprite.getHeight() / 2;
 		sprite.setPosition(x, y);
+		
+		wayLightLeft.setPosition(x+10, y+20);
+		wayLightLeft.setRotation(angle);
+		
+		wayLightRight.setPosition(x-10, y-10);
+		wayLightRight.setRotation(angle);
+		
+		
+		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
+		wayLightLeft.setOrigin(sprite.getWidth()/2+10, sprite.getHeight()/2-60);
+		wayLightRight.setOrigin(sprite.getWidth()/2+10, sprite.getHeight()/2+5);
+		
 		this.setPosition(x, y);
 		this.setOrigin(x, y);
 
@@ -61,12 +80,17 @@ public abstract class Car extends Polygon {
 		topSpeed = 450f;
 		//angle = 90;
 		polygonAdjust = 5;
-
 		this.setVertices(new float[] { 0, 0, 0, 0 + sprite.getHeight(), 0 + sprite.getWidth(), 0 + sprite.getHeight(),
 				0 + sprite.getWidth(), 0 });
 		this.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		this.setRotation(angle);
 
+	}
+	public Sprite getWayLightLeft() {
+		return wayLightLeft;
+	}
+	public Sprite getWayLightRight() {
+		return wayLightRight;
 	}
 	/**
 	 * Update movement of car and it's sprite. Check for collisions with other objects.
@@ -84,6 +108,12 @@ public abstract class Car extends Polygon {
 
 		sprite.setPosition(x, y);
 		sprite.setRotation(angle);
+		
+		wayLightLeft.setPosition(x-10, y+60);
+		wayLightLeft.setRotation(angle);
+		
+		wayLightRight.setPosition(x-10, y-5);
+		wayLightRight.setRotation(angle);
 	}
 
 	abstract protected void controlls();

@@ -16,9 +16,8 @@ public class AutonomusCar extends Car {
 	boolean turning;
 	boolean go;
 	boolean haveNewWay;
-//	int takenRoad;
-	
-	
+	// int takenRoad;
+
 	boolean normalWay;
 	float pastAngle;
 	float pastX;
@@ -510,12 +509,14 @@ public class AutonomusCar extends Car {
 
 		speed = 250;
 		int dist = 200;
+		wayLightRight.setTexture(img2);
 		if (x >= pastX + dist || x <= pastX - dist || y >= pastY + dist || y <= pastY - dist) {
 			angle = angle - 2;
 			if (pastAngle - 90 == angle) {
 				turning = false;
 				normalWay = true;
 				haveNewWay = false;
+				wayLightRight.setTexture(img);
 				if (angle == -360) {
 					angle = 0;
 				}
@@ -531,98 +532,86 @@ public class AutonomusCar extends Car {
 
 		speed = 450;
 		int dist = 200;
+		wayLightLeft.setTexture(img2);
 		if (x >= pastX + dist || x <= pastX - dist || y >= pastY + dist || y <= pastY - dist) {
 			angle = angle + 2;
 			if (pastAngle + 90 == angle) {
 				turning = false;
 				normalWay = true;
 				haveNewWay = false;
+				wayLightLeft.setTexture(img);
 				if (angle == 360) {
 					angle = 0;
+					
 				}
 			}
 		}
 		System.out.println(angle + "   " + pastAngle);
 	}
 
-	
-	
 	protected void checkForCollision(ArrayList<Intersection> intersectionList) {
-	/*	for (Intersection intersection : intersectionList) {
+		for (Intersection intersection : intersectionList) {
 			try {
 				if (normalWay == true
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadRight().getRectToPoly())) {
 					System.out.println("Kolizja1");
-					intersection.getRoadRight().setTaken(true);
 					normalWay = false;
 					pastX = x;
 					pastY = y;
 					pastAngle = angle;
 					currentIntersection = intersection;
-				} else {
-					intersection.getRoadRight().setTaken(false);
-				}
-
+				} 
 			} catch (NullPointerException e) {
 			}
 			try {
 				if (normalWay == true
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadLeft().getRectToPoly())) {
 					System.out.println("Kolizja2");
-					intersection.getRoadLeft().setTaken(true);
 					normalWay = false;
 					pastX = x;
 					pastY = y;
 					pastAngle = angle;
 					currentIntersection = intersection;
-				} else {
-					intersection.getRoadLeft().setTaken(false);
-				}
+				} 
 			} catch (NullPointerException e) {
 			}
 			try {
 				if (normalWay == true
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadUp().getRectToPoly())) {
 					System.out.println("Kolizja3");
-					intersection.getRoadUp().setTaken(true);
 					normalWay = false;
 					pastX = x;
 					pastY = y;
 					pastAngle = angle;
 					currentIntersection = intersection;
-				} else {
-					intersection.getRoadUp().setTaken(false);
-				}
+				} 
 			} catch (NullPointerException e) {
 			}
 			try {
 				if (normalWay == true
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadDown().getRectToPoly())) {
 					System.out.println("kolizja4");
-					intersection.getRoadDown().setTaken(true);
 					normalWay = false;
 					pastX = x;
 					pastY = y;
 					pastAngle = angle;
 					currentIntersection = intersection;
-				} else {
-					intersection.getRoadDown().setTaken(false);
-				}
+				} 
 			} catch (NullPointerException e) {
 			}
 		}
-	*/}
+	}
 	/*
-		 * boolean doesNewExist(int way){ if(angle == 0){ if(way == 0){ try{
-		 * currentIntersection.getRoadUp().isTaken(); return true;
-		 * }catch(NullPointerException e){ return false; } } }else if(angle
-		 * ==-90 || angle ==270){ if(way == 0){ try{
-		 * currentIntersection.getRoadUp().isTaken(); return true;
-		 * }catch(NullPointerException e){ return false; } } }else if(angle == )
-		 * 
-		 * 
-		 * 
-		 * 
-		 * }
-		 */
+	 * boolean doesNewExist(int way){ if(angle == 0){ if(way == 0){ try{
+	 * currentIntersection.getRoadUp().isTaken(); return true;
+	 * }catch(NullPointerException e){ return false; } } }else if(angle ==-90 ||
+	 * angle ==270){ if(way == 0){ try{
+	 * currentIntersection.getRoadUp().isTaken(); return true;
+	 * }catch(NullPointerException e){ return false; } } }else if(angle == )
+	 * 
+	 * 
+	 * 
+	 * 
+	 * }
+	 */
 }

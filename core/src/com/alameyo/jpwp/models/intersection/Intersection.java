@@ -58,19 +58,19 @@ public class Intersection extends Rectangle {
 	public void interUpdate(LinkedList<Car> carList) {
 		for (Car car : carList) {
 			try {
-				this.leftTaken = roadListener(roadLeft, car);
+				roadLeft.setTaken(roadListener(roadLeft, car)) ;
 			} catch (NullPointerException e) {
 			}
 			try {
-				this.rightTaken = roadListener(roadRight, car);
+				roadRight.setTaken( roadListener(roadRight, car));
 			} catch (NullPointerException e) {
 			}
 			try {
-				this.upTaken = roadListener(roadUp, car);
+				roadUp.setTaken(roadListener(roadUp, car));
 			} catch (NullPointerException e) {
 			}
 			try {
-				this.downTaken = roadListener(roadDown, car);
+				roadDown.setTaken( roadListener(roadDown, car));
 			} catch (NullPointerException e) {
 			}
 		}
