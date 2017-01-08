@@ -12,7 +12,7 @@ public class CollisionListeners {
 
 	void listenRoadCar(Car car, LinkedList<Intersection> interSectionList) {
 		for (Intersection intersection : interSectionList) {
-			intersection.interUpdate(car);
+			//intersection.interUpdate(car);
 		}
 	}
 

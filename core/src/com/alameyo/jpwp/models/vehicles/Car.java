@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
- * @author Pawe³ Œcibiorski Abstract class for cars
+ *  Abstract class for cars
  *
  */
 public abstract class Car extends Polygon {
@@ -89,7 +89,7 @@ public abstract class Car extends Polygon {
 	abstract protected void controlls();
 
 	protected void checkForCollision(ArrayList<Intersection> intersectionList) {
-
+		
 	}
 
 	public void dispose() {

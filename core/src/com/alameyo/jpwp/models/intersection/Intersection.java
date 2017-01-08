@@ -1,5 +1,8 @@
 package com.alameyo.jpwp.models.intersection;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 import com.alameyo.jpwp.models.vehicles.Car;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -26,10 +29,11 @@ public class Intersection extends Rectangle {
 
 	protected Sprite sprite;
 	protected Texture img;
+
 	/**
 	 * 
 	 * @param builder
-	 * Constructor for Intersection.
+	 *            Constructor for Intersection.
 	 */
 	public Intersection(Builder builder) {
 
@@ -51,22 +55,24 @@ public class Intersection extends Rectangle {
 	 *            Update information about roads of intersection with car on
 	 *            them.
 	 */
-	public void interUpdate(Car car) {
-		try {
-			this.leftTaken = roadListener(roadLeft, car);
-		} catch (NullPointerException e) {
-		}
-		try {
-			this.rightTaken = roadListener(roadRight, car);
-		} catch (NullPointerException e) {
-		}
-		try {
-			this.upTaken = roadListener(roadUp, car);
-		} catch (NullPointerException e) {
-		}
-		try {
-			this.downTaken = roadListener(roadDown, car);
-		} catch (NullPointerException e) {
+	public void interUpdate(LinkedList<Car> carList) {
+		for (Car car : carList) {
+			try {
+				this.leftTaken = roadListener(roadLeft, car);
+			} catch (NullPointerException e) {
+			}
+			try {
+				this.rightTaken = roadListener(roadRight, car);
+			} catch (NullPointerException e) {
+			}
+			try {
+				this.upTaken = roadListener(roadUp, car);
+			} catch (NullPointerException e) {
+			}
+			try {
+				this.downTaken = roadListener(roadDown, car);
+			} catch (NullPointerException e) {
+			}
 		}
 	}
 
@@ -94,6 +100,7 @@ public class Intersection extends Rectangle {
 	public boolean isLeftTaken() {
 		return leftTaken;
 	}
+
 	/**
 	 * 
 	 * @param leftTaken
@@ -101,6 +108,7 @@ public class Intersection extends Rectangle {
 	public void setLeftTaken(boolean leftTaken) {
 		this.leftTaken = leftTaken;
 	}
+
 	/**
 	 * 
 	 * @return
@@ -108,6 +116,7 @@ public class Intersection extends Rectangle {
 	public boolean isRightTaken() {
 		return rightTaken;
 	}
+
 	/**
 	 * 
 	 * @param rightTaken
@@ -115,6 +124,7 @@ public class Intersection extends Rectangle {
 	public void setRightTaken(boolean rightTaken) {
 		this.rightTaken = rightTaken;
 	}
+
 	/**
 	 * 
 	 * @return
@@ -122,6 +132,7 @@ public class Intersection extends Rectangle {
 	public boolean isUpTaken() {
 		return upTaken;
 	}
+
 	/**
 	 * 
 	 * @param upTaken
@@ -129,6 +140,7 @@ public class Intersection extends Rectangle {
 	public void setUpTaken(boolean upTaken) {
 		this.upTaken = upTaken;
 	}
+
 	/**
 	 * 
 	 * @return
@@ -136,6 +148,7 @@ public class Intersection extends Rectangle {
 	public boolean isDownTaken() {
 		return downTaken;
 	}
+
 	/**
 	 * 
 	 * @param downTaken
@@ -143,6 +156,7 @@ public class Intersection extends Rectangle {
 	public void setDownTaken(boolean downTaken) {
 		this.downTaken = downTaken;
 	}
+
 	/**
 	 * 
 	 * @return
@@ -150,6 +164,7 @@ public class Intersection extends Rectangle {
 	public Road getRoadLeft() {
 		return roadLeft;
 	}
+
 	/**
 	 * 
 	 * @return
@@ -157,6 +172,7 @@ public class Intersection extends Rectangle {
 	public Road getRoadRight() {
 		return roadRight;
 	}
+
 	/**
 	 * 
 	 * @return
@@ -164,6 +180,7 @@ public class Intersection extends Rectangle {
 	public Road getRoadUp() {
 		return roadUp;
 	}
+
 	/**
 	 * 
 	 * @return
@@ -190,6 +207,7 @@ public class Intersection extends Rectangle {
 
 		protected Sprite sprite;
 		protected Texture img;
+
 		/**
 		 * 
 		 * @param roadLeft
@@ -199,6 +217,7 @@ public class Intersection extends Rectangle {
 			this.roadLeft = roadLeft;
 			return this;
 		}
+
 		/**
 		 * 
 		 * @param roadRight
@@ -208,6 +227,7 @@ public class Intersection extends Rectangle {
 			this.roadRight = roadRight;
 			return this;
 		}
+
 		/**
 		 * 
 		 * @param roadUp
@@ -217,6 +237,7 @@ public class Intersection extends Rectangle {
 			this.roadUp = roadUp;
 			return this;
 		}
+
 		/**
 		 * 
 		 * @param roadDown
@@ -226,6 +247,7 @@ public class Intersection extends Rectangle {
 			this.roadDown = roadDown;
 			return this;
 		}
+
 		/**
 		 * 
 		 * @param x
@@ -235,6 +257,7 @@ public class Intersection extends Rectangle {
 			this.x = x;
 			return this;
 		}
+
 		/**
 		 * 
 		 * @param y

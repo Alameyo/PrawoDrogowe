@@ -164,11 +164,13 @@ public class GameScreen implements Screen {
 
 		//car.carUpdate(interSectionList);
 		
+		for (Intersection intersection : interSectionList) {
+					intersection.interUpdate(carList);
+				}
+		
 		for (Car car : carList) {
 			car.carUpdate(interSectionList);
-			for (Intersection intersection : interSectionList) {
-				intersection.interUpdate(car);
-			}
+		
 			
 		//	autoCar.carUpdate();
 		}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.alameyo.jpwp.models.intersection.Intersection;
+import com.alameyo.jpwp.models.intersection.Road;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -15,11 +16,13 @@ public class AutonomusCar extends Car {
 	boolean turning;
 	boolean go;
 	boolean haveNewWay;
+//	int takenRoad;
+	
+	
 	boolean normalWay;
 	float pastAngle;
 	float pastX;
 	float pastY;
-	int takenRoad;
 	Intersection currentIntersection;
 
 	public AutonomusCar(World world, float x, float y, float angle) {
@@ -83,45 +86,64 @@ public class AutonomusCar extends Car {
 
 	private boolean canIgoRight() {
 		if (angle == 0) {
-			try {
-				if (currentIntersection.getRoadUp().isTaken() == true) {
-					
+			if (currentIntersection.getRoadDown() != null) {
+				try {
+					if (currentIntersection.getRoadUp().isTaken() == true) {
+
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} catch (NullPointerException e) {
 					canIgo = false;
-				} else {
-					canIgo = true;
+					haveNewWay = false;
 				}
-			} catch (NullPointerException e) {
-				canIgo = true;
 			}
 		} else if (angle == -90 || angle == 270) {
-			try {
-				if (currentIntersection.getRoadRight().isTaken() == true) {
-					canIgo = false;
-				} else {
+			if (currentIntersection.getRoadLeft() != null) {
+				try {
+					if (currentIntersection.getRoadRight().isTaken() == true) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} catch (NullPointerException e) {
 					canIgo = true;
 				}
-			} catch (NullPointerException e) {
-				canIgo = true;
+			} else {
+				canIgo = false;
+				haveNewWay = false;
 			}
 		} else if (angle == -180 || angle == 180) {
-			try {
-				if (currentIntersection.getRoadDown().isTaken() == true) {
-					canIgo = false;
-				} else {
+			if (currentIntersection.getRoadUp() != null) {
+				try {
+					if (currentIntersection.getRoadDown().isTaken() == true) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} catch (NullPointerException e) {
 					canIgo = true;
 				}
-			} catch (NullPointerException e) {
-				canIgo = true;
+			} else {
+				canIgo = false;
+				haveNewWay = false;
 			}
 		} else if (angle == -270 || angle == 90) {
-			try {
-				if (currentIntersection.getRoadLeft().isTaken() == true) {
+			if (currentIntersection.getRoadRight() != null) {
+				try {
+					if (currentIntersection.getRoadLeft().isTaken() == true) {
+						canIgo = false;
+					} else {
+						canIgo = true;
+					}
+				} catch (NullPointerException e) {
 					canIgo = false;
-				} else {
-					canIgo = true;
+					haveNewWay = false;
 				}
-			} catch (NullPointerException e) {
-				canIgo = true;
+			} else {
+				canIgo = false;
+
 			}
 		}
 
@@ -442,9 +464,9 @@ public class AutonomusCar extends Car {
 			if (haveNewWay == false) {
 
 				myWay = rand.nextInt(3);
-				//myWay = 0;
+				// myWay = 0;
 				haveNewWay = true;
-				
+
 			}
 		} else if (normalWay == false) {
 
@@ -504,6 +526,7 @@ public class AutonomusCar extends Car {
 	}
 
 	private void turnLeft() {
+
 		turning = true;
 
 		speed = 450;
@@ -522,8 +545,10 @@ public class AutonomusCar extends Car {
 		System.out.println(angle + "   " + pastAngle);
 	}
 
+	
+	
 	protected void checkForCollision(ArrayList<Intersection> intersectionList) {
-		for (Intersection intersection : intersectionList) {
+	/*	for (Intersection intersection : intersectionList) {
 			try {
 				if (normalWay == true
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadRight().getRectToPoly())) {
@@ -586,30 +611,18 @@ public class AutonomusCar extends Car {
 			} catch (NullPointerException e) {
 			}
 		}
-	}/*
-	boolean doesNewExist(int way){
-		if(angle == 0){
-			if(way == 0){
-				try{
-					currentIntersection.getRoadUp().isTaken();
-					return true;
-				}catch(NullPointerException e){
-					return false;
-				}
-			}
-		}else if(angle ==-90 || angle ==270){
-			if(way == 0){
-				try{
-					currentIntersection.getRoadUp().isTaken();
-					return true;
-				}catch(NullPointerException e){
-					return false;
-				}
-			}
-		}else if(angle == )
-		
-		
-		
-		
-	}*/
+	*/}
+	/*
+		 * boolean doesNewExist(int way){ if(angle == 0){ if(way == 0){ try{
+		 * currentIntersection.getRoadUp().isTaken(); return true;
+		 * }catch(NullPointerException e){ return false; } } }else if(angle
+		 * ==-90 || angle ==270){ if(way == 0){ try{
+		 * currentIntersection.getRoadUp().isTaken(); return true;
+		 * }catch(NullPointerException e){ return false; } } }else if(angle == )
+		 * 
+		 * 
+		 * 
+		 * 
+		 * }
+		 */
 }
