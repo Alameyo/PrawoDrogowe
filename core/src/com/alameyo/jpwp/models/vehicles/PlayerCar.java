@@ -57,13 +57,13 @@ public class PlayerCar extends Car {
 
 	@Override
 	protected void checkForCollision(LinkedList<Intersection> intersectionList) {
-		try {
+	/*	try {
 			System.out.println("On da way" + intersectionList.getFirst().getRoadLeft().isTaken()
 					+ intersectionList.getFirst().getRoadRight().isTaken() + intersectionList.getFirst().getRoadUp().isTaken()
 					+ intersectionList.getFirst().getRoadDown().isTaken());
 		} catch (NullPointerException e) {
 		}
-
+*/
 	}
 
 	private void turning() {

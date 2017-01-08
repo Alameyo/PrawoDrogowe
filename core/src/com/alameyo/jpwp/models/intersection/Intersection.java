@@ -53,25 +53,40 @@ public class Intersection extends Rectangle {
 	 */
 	public void interUpdate(LinkedList<Car> carList) {
 		for (Car car : carList) {
-			try {
-				roadLeft.setTaken(roadListener(roadLeft, car)) ;
-			} catch (NullPointerException e) {
+			if (roadLeft != null) {
+				if (roadListener(roadLeft, car) == true) {
+					roadLeft.setTaken(true);
+				}
 			}
-			try {
-				roadRight.setTaken( roadListener(roadRight, car));
-			} catch (NullPointerException e) {
+			if (roadRight != null) {
+				if (roadListener(roadRight, car) == true) {
+					roadRight.setTaken(true);
+				}
 			}
-			try {
-				roadUp.setTaken(roadListener(roadUp, car));
-			} catch (NullPointerException e) {
+			if (roadUp != null) {
+				if (roadListener(roadUp, car) == true) {
+					roadUp.setTaken(true);
+				}
 			}
-			try {
-				roadDown.setTaken( roadListener(roadDown, car));
-			} catch (NullPointerException e) {
+			if (roadDown != null) {
+				if (roadListener(roadDown, car) == true) {
+					roadDown.setTaken(true);
+				}
 			}
-			
 		}
 	}
+
+	public void reset() {
+		if (roadLeft != null) {
+			roadLeft.setTaken(false);
+		}
+		if (roadRight != null) {
+		roadRight.setTaken(false);}
+		if (roadUp != null) {
+		roadUp.setTaken(false);}
+		if (roadDown != null) {
+		roadDown.setTaken(false);
+	}}
 
 	/**
 	 * 
@@ -83,13 +98,14 @@ public class Intersection extends Rectangle {
 		boolean roadTaken;
 		if (Intersector.overlapConvexPolygons(road.rectToPoly, car)) {
 			roadTaken = true;
-			//road.setTaken(roadTaken);
-			
+			// road.setTaken(roadTaken);
+
 		} else {
 			roadTaken = false;
-			//road.setTaken(roadTaken);
+			// road.setTaken(roadTaken);
 		}
-		//System.out.println("Na drodze" + roadUp.isTaken() + roadLeft.isTaken() + roadDown.isTaken() + roadRight.isTaken());
+		// System.out.println("Na drodze" + roadUp.isTaken() +
+		// roadLeft.isTaken() + roadDown.isTaken() + roadRight.isTaken());
 		return roadTaken;
 	}
 

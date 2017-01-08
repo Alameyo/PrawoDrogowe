@@ -39,10 +39,10 @@ public class AutonomusCar extends Car {
 	 */
 	private boolean canIgoAhead() {
 		if (angle == 0) {
-			try {
-				currentIntersection.getRoadRight().isTaken();
+			if (currentIntersection.getRoadRight() != null) {
+
 				System.out.println("znalaz³o prawo droge");
-				try {
+				if (currentIntersection.getRoadDown() != null) {
 					if (currentIntersection.getRoadDown().isTaken() == true) {
 
 						canIgo = false;
@@ -50,66 +50,63 @@ public class AutonomusCar extends Car {
 						canIgo = true;
 						System.out.println("drogadolna niezajeta");
 					}
-				} catch (NullPointerException e) {
+				} else {
 					canIgo = true;
 					System.out.println("droga dolnanieistnieje");
 				}
-			} catch (NullPointerException e2) {
+			} else {
 				canIgo = false;
 				haveNewWay = false;
 			}
 
 		} else if (angle == -90 || angle == 270) {
-			try {
-				currentIntersection.getRoadDown().isTaken();
-				try {
+			if (currentIntersection.getRoadDown() != null) {
+
+				if (currentIntersection.getRoadLeft() != null) {
 					if (currentIntersection.getRoadLeft().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
-				} catch (NullPointerException e) {
+				} else {
 					canIgo = true;
 				}
-			} catch (NullPointerException e2) {
+			} else {
 				canIgo = false;
 				haveNewWay = false;
 			}
 		} else if (angle == -180 || angle == 180) {
-			try {
-				currentIntersection.getRoadLeft().isTaken();
-				try {
+			if (currentIntersection.getRoadLeft() != null) {
+				if (currentIntersection.getRoadUp() != null) {
 					if (currentIntersection.getRoadUp().isTaken() == true) {
 						canIgo = false;
 					} else {
 						canIgo = true;
 					}
-				} catch (NullPointerException e) {
+				} else {
 					canIgo = true;
 				}
-			} catch (NullPointerException e2) {
+			} else {
 				canIgo = false;
 				System.out.println("Co jest nie tak");
 				haveNewWay = false;
 			}
 		} else if (angle == -270 || angle == 90) {
 			System.out.println("sprawdzam");
-			try {
-				currentIntersection.getRoadUp().isTaken();
+			if (currentIntersection.getRoadUp() != null) {
 				System.out.println("jest górna droga");
-
-				try {
+				if (currentIntersection.getRoadRight() != null) {
 					if (currentIntersection.getRoadRight().isTaken() == true) {
 						canIgo = false;
 
 					} else {
 						canIgo = true;
 					}
-				} catch (NullPointerException e) {
+				} else {
 					canIgo = true;
 
 				}
-			} catch (NullPointerException e2) {
+			} else {
 				canIgo = false;
 				haveNewWay = false;
 				System.out.println("niema górnej drogi");
@@ -124,63 +121,35 @@ public class AutonomusCar extends Car {
 	private boolean canIgoRight() {
 		if (angle == 0) {
 			if (currentIntersection.getRoadDown() != null) {
-				try {
-					if (currentIntersection.getRoadUp().isTaken() == true) {
+				canIgo = true;
 
-						canIgo = false;
-					} else {
-						canIgo = true;
-					}
-				} catch (NullPointerException e) {
-					canIgo = false;
-					haveNewWay = false;
-				}
+			} else {
+				canIgo = false;
+				haveNewWay = false;
 			}
 		} else if (angle == -90 || angle == 270) {
 			if (currentIntersection.getRoadLeft() != null) {
-				try {
-					if (currentIntersection.getRoadRight().isTaken() == true) {
-						canIgo = false;
-					} else {
-						canIgo = true;
-					}
-				} catch (NullPointerException e) {
-					canIgo = true;
-				}
+				canIgo = true;
+
 			} else {
 				canIgo = false;
 				haveNewWay = false;
 			}
 		} else if (angle == -180 || angle == 180) {
 			if (currentIntersection.getRoadUp() != null) {
-				try {
-					if (currentIntersection.getRoadDown().isTaken() == true) {
-						canIgo = false;
-					} else {
-						canIgo = true;
-					}
-				} catch (NullPointerException e) {
-					canIgo = true;
-				}
+				canIgo = true;
+
 			} else {
 				canIgo = false;
 				haveNewWay = false;
 			}
 		} else if (angle == -270 || angle == 90) {
 			if (currentIntersection.getRoadRight() != null) {
-				try {
-					if (currentIntersection.getRoadLeft().isTaken() == true) {
-						canIgo = false;
-					} else {
-						canIgo = true;
-					}
-				} catch (NullPointerException e) {
-					canIgo = false;
-					haveNewWay = false;
-				}
+				canIgo = true;
+
 			} else {
 				canIgo = false;
-
+				haveNewWay = false;
 			}
 		}
 
@@ -188,6 +157,7 @@ public class AutonomusCar extends Car {
 		 * if (roadLeft == true) { canIgo = false; } else { canIgo = true; }
 		 */
 		return canIgo;
+
 	}
 
 	private boolean canIgoLeft() {
@@ -500,12 +470,14 @@ public class AutonomusCar extends Car {
 
 	@Override
 	protected void controlls() {
-		try {
-			System.out.println("On da way" + currentIntersection.getRoadLeft().isTaken()
-					+ currentIntersection.getRoadRight().isTaken() + currentIntersection.getRoadUp().isTaken()
-					+ currentIntersection.getRoadDown().isTaken());
-		} catch (NullPointerException e) {
-		}
+		/*
+		 * try { System.out.println("On da way" +
+		 * currentIntersection.getRoadLeft().isTaken() +
+		 * currentIntersection.getRoadRight().isTaken() +
+		 * currentIntersection.getRoadUp().isTaken() +
+		 * currentIntersection.getRoadDown().isTaken()); } catch
+		 * (NullPointerException e) { }
+		 */
 		if (normalWay == true) {
 			speed = 300;
 
@@ -513,7 +485,7 @@ public class AutonomusCar extends Car {
 
 			if (haveNewWay == false) {
 
-				myWay = rand.nextInt(2);
+				myWay = rand.nextInt(3);
 				// myWay = 2;
 				haveNewWay = true;
 				System.out.println("rand" + myWay);
