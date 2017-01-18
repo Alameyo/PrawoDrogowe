@@ -8,38 +8,19 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 /**
- * 
- * Skrzy¿owanie.
- *
+ *Intersection
  */
 public class Intersection extends Rectangle {
 
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * Drogi nale¿¹ce do skrzy¿owania.
-	 */
 	protected Road roadLeft, roadRight, roadUp, roadDown;
-	/**
-	 * Zajêtoœæ drogi.
-	 */
 	protected boolean taken;
-	/**
-	 * Po³o¿enie.
-	 */
 	public float x,y;
-	/**
-	 * Sprite skrzy¿owania.
-	 */
 	protected Sprite sprite;
-	/**
-	 * Tekstura skrzy¿owania.
-	 */
 	protected Texture img;
 
 	/**
 	 * Constructor for Intersection.
-	 * Konstruktor dla skrzy¿owania.
 	 * @param builder
 	 *     
 	 */
@@ -57,11 +38,9 @@ public class Intersection extends Rectangle {
 		sprite.setPosition(x, y);
 	}
 
-	/**
-	 * 
+	/** 
 	 * Update information about roads of intersection with car on
 	 * them.
-	 * Aktualizuje informacje o po³o¿eniu pojazdów na skrzy¿owaniu.
 	 * @param car
 	 */
 	public void interUpdate(LinkedList<Car> carList) {
@@ -89,7 +68,7 @@ public class Intersection extends Rectangle {
 		}
 	}
 	/**
-	 * Resetuje informacje o skrzy¿owaniu.
+	 * Reset intersection's state.
 	 */
 	public void reset() {
 		if (roadLeft != null) {
@@ -107,7 +86,6 @@ public class Intersection extends Rectangle {
 	}
 
 	/**
-	 * Nas³uchuje kolizji dróg z samochodami.
 	 * Listening for collision with car.
 	 * @param road
 	 * @param car

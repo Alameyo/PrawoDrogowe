@@ -10,38 +10,16 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class AutonomusCar extends Car {
-	/**
-	 * Kierunek dalszej jazdy.
-	 */
 	int myWay;
-	/**
-	 * Czy ma pierwszeñstwo i mogê jechaæ.
-	 */
 	boolean canIgo;
-	/**
-	 * Do losowania drogi
-	 */
 	Random rand;
 	boolean turning;
-	
-	/**
-	 * Czy ma obrany kierunek skrêtu na skrzy¿owaniu.
-	 */
 	boolean haveNewWay;
-	/**
-	 * Czy jest na skrzy¿owaniu czy w trasie.
-	 */
 	boolean normalWay;
-	/**
-	 * Po³o¿enie przed skrêtem.
-	 */
 	float pastAngle, pastX, pastY;
-	/**
-	 * Obecne skrzy¿owanie na którym siê znajduje.
-	 */
 	Intersection currentIntersection;
+
 	/**
-	 * Konstruktor wykorzystuj¹cy tak¿e superkonstruktor klasy z której dziedziczy.
 	 * @param world
 	 * @param x
 	 * @param y
@@ -58,12 +36,11 @@ public class AutonomusCar extends Car {
 
 	/**
 	 * Check if car can go ahead through intersection.
-	 * Sprawdza czy mo¿e przejechaæ przez skrzy¿owanie na wprost.
 	 */
 	private boolean canIgoAhead() {
 		if (angle == 0) {
 			if (currentIntersection.getRoadRight() != null) {
-				
+
 				if (currentIntersection.getRoadDown() != null) {
 					if (currentIntersection.getRoadDown().isTaken() == true) {
 
@@ -130,8 +107,8 @@ public class AutonomusCar extends Car {
 		}
 		return canIgo;
 	}
+
 	/**
-	 * Sprawdza czy mo¿e przejechaæ przez skrzy¿owanie na prawo.
 	 * @return
 	 */
 	private boolean canIgoRight() {
@@ -175,8 +152,8 @@ public class AutonomusCar extends Car {
 		return canIgo;
 
 	}
+
 	/**
-	 * Sprawdza czy mo¿e przejechaæ przez skrzy¿owanie na lewo.
 	 * @return
 	 */
 	private boolean canIgoLeft() {
@@ -302,9 +279,7 @@ public class AutonomusCar extends Car {
 		return canIgo;
 
 	}
-	/**
-	 * Sterowanie bota wykorzystuj¹ce element losowy i skrypty odpowiednich manewrów.
-	 */
+
 	@Override
 	protected void controlls() {
 		if (normalWay == true) {
@@ -317,7 +292,6 @@ public class AutonomusCar extends Car {
 				myWay = rand.nextInt(3);
 				// myWay = 2;
 				haveNewWay = true;
-				
 
 			}
 			if (myWay == 0) {
@@ -343,9 +317,7 @@ public class AutonomusCar extends Car {
 		}
 
 	}
-	/**
-	 * Manewr przejazdu na wprost przez skrzy¿owanie.
-	 */
+
 	private void goAhead() {
 		turning = true;
 
@@ -358,9 +330,7 @@ public class AutonomusCar extends Car {
 		}
 
 	}
-	/**
-	 * Manewr skrêtu w prawo.
-	 */
+
 	private void turnRight() {
 		turning = true;
 
@@ -382,8 +352,8 @@ public class AutonomusCar extends Car {
 			}
 		}
 
-		
 	}
+
 	/**
 	 * Manewr skrêtu w lewo.
 	 */
@@ -409,17 +379,18 @@ public class AutonomusCar extends Car {
 				}
 			}
 		}
-		
+
 	}
+
 	/**
-	 * Sprawdza czy nast¹pi³a kolizja ze skrzy¿owaniem.
+	 * Check for collision with intersection and update position before turning.
 	 */
 	protected void checkForCollision(LinkedList<Intersection> intersectionList) {
 		for (Intersection intersection : intersectionList) {
 			try {
 				if (normalWay == true
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadRight().getRectToPoly())) {
-					
+
 					normalWay = false;
 					rememberPositionBeforeTurning(intersection);
 					// regenerator
@@ -432,7 +403,7 @@ public class AutonomusCar extends Car {
 			try {
 				if (normalWay == true
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadLeft().getRectToPoly())) {
-					
+
 					normalWay = false;
 					rememberPositionBeforeTurning(intersection);
 					// regenerator
@@ -444,7 +415,7 @@ public class AutonomusCar extends Car {
 			try {
 				if (normalWay == true
 						&& Intersector.overlapConvexPolygons(this, intersection.getRoadUp().getRectToPoly())) {
-					
+
 					normalWay = false;
 					rememberPositionBeforeTurning(intersection);
 				}
@@ -461,8 +432,8 @@ public class AutonomusCar extends Car {
 			}
 		}
 	}
+
 	/**
-	 * Zapamiêtuje pozycjê przed manewrem jako punkt odniesienia.
 	 * @param intersection
 	 */
 	private void rememberPositionBeforeTurning(Intersection intersection) {

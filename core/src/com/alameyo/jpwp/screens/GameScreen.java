@@ -21,59 +21,20 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
-/**
- * Screen with game
- */
 public class GameScreen implements Screen {
-	/**
-	 * MainClass
-	 */
 	MainClass game;
-	/**
-	 * Batch for drawing sprites. S³u¿y do malowania spritów (tekstur).
-	 */
 	SpriteBatch batch;
-	/**
-	 * For Box2D Wykorzystywany w przypadku u¿ycia silnika fizycznego Box2D.
-	 */
 	World world;
-	/**
-	 * Camera view. Do ustawieñ kamery
-	 */
 	OrthographicCamera cam;
 
 	LinkedList<Road> roadList;
-	/**
-	 * List with Intersections. Lista ze skrzy¿owaniami.
-	 */
 	LinkedList<Intersection> interSectionList;
-	/**
-	 * List with Cars. Lista z samoachodami.
-	 */
 	LinkedList<Car> carList;
-	/**
-	 * Lista z budynkami.
-	 */
 	LinkedList<Building> builidingList;
-	/**
-	 * For Polygons debbuging purposes. Do debuggowania wieloboków.
-	 */
 
 	private ShapeRenderer shapeRenderer;
-	/**
-	 * Starts when game begin. Zaczyna siê wraz z rozpoczêciem gry.
-	 */
 	long startTime;
-	/**
-	 * Time at the end of the game. Czas koñca gry.
-	 */
 	long endTime;
-
-	/**
-	 * Constructor of GameScreen. Konstruktor okna z gr¹.
-	 * 
-	 * @param game
-	 */
 	public GameScreen(MainClass game) {
 		this.game = game;
 		this.batch = game.getBatch();
@@ -143,62 +104,35 @@ public class GameScreen implements Screen {
 
 	}
 
-	/**
-	 * 
-	 */
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
 
 	}
-
-	/**
-	 * 
-	 */
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
 
 	}
-
-	/**
-	 * 
-	 */
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
 
 	}
-
-	/**
-	 * 
-	 */
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
 
 	}
-
-	/**
-	 * 
-	 */
 	@Override
 	public void dispose() {
 		world.dispose();
 	}
-
-	/**
-	 * 
-	 */
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
 
 	}
-
-	/**
-	 * Renderuje obraz.
-	 */
 	@Override
 	public void render(float delta) {
 		update();
@@ -261,7 +195,7 @@ public class GameScreen implements Screen {
 	}
 */
 	/**
-	 * Initialization of map. Ustawia elementy mapy.
+	 * Initialization of map. 
 	 */
 	private void mapInit() {
 		roadList = new LinkedList<Road>();

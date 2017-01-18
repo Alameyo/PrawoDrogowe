@@ -10,14 +10,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class PlayerCar extends Car {
-	/**
-	 * Efekty dzwiêkowe.
-	 */
+
 	Sound sound, sound2;
 
 	/**
-	 * Konstruktor pojazdu gracza.
-	 * 
 	 * @param world
 	 * @param x
 	 * @param y
@@ -35,9 +31,6 @@ public class PlayerCar extends Car {
 		sound2.pause();
 	}
 
-	/**
-	 * Sterowanie gracza. Player controller
-	 */
 	@Override
 	protected void controlls() {
 		if (Gdx.input.isKeyPressed(Keys.W) || Gdx.input.isKeyPressed(Keys.UP)) {
